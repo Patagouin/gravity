@@ -1,0 +1,8 @@
+Utiliser un valarray  #include <valarray.h>
+
+Permet d'effectué une même opération à tous les éléments du tableau déclaré valarray
+Pas optimisé pour des opérations de rajout d'éléments.
+
+Utiliser le double buffering pour ne pas ralentir l'affichage.
+Utiliser la classe QGLContext pour dessiner sur les différents contexte s'il y en a
+

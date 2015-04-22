@@ -1,0 +1,7 @@
+Utiliser un valarray  #include <valarray.h>
+
+Permet d'effectué une même opération à tous les éléments du tableau déclaré valarray
+Pas optimisé pour des opérations de rajout d'éléments.
+
+
+
