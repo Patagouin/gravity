@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     Monde monMonde = new Monde();
 
     AbstractObjet objetAbstrait = new AbstractObjet(QString("Cube"),cubeVertices,cubeNormals,cubeTextureCoordinates);
-    double deformation[3] = {50,50,50};
+    double deformation[5] = {50,50,50,50,50};
     ObjetClassique cube = new ObjetClassique(objetAbstrait, 1, deformation);
     monConteneur.ajouterObjet(cube);
 

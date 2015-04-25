@@ -13,7 +13,8 @@ class Camera : public ObjetClassique
 
 public:
     Camera();
-    Camera(ObjetClassique objetClassique, QVector3D pointFocus, QList<QVector3D> surfaceCamera);
+    Camera(ObjetClassique objetClassique, QVector3D positionCamera, QVector3D positionFocus, double distanceNear,
+           double distanceFar, double tailleL, double tailleR, double tailleT, double tailleB);
     ~Camera();
 
 
@@ -26,8 +27,15 @@ public:
 
 protected:
 
-    QVector3D pointFocus;
-    QList<QVector3D> surfaceCamera;
+    QVector3D positionCamera;
+    QVector3D positionFocus;
+    double distanceNear; // Distance de positionCamera où FOV commence
+    double distanceFar; // Distance de positionCamera où FOV fini
+    double tailleL;
+    double tailleR;
+    double tailleT;
+    double tailleB;
+
 
     // L'orientation de la caméra est donné par la classe mere AbstractObjet
 

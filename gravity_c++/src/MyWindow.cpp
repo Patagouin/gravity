@@ -39,11 +39,7 @@ MyWindow::MyWindow(QWidget *parent) : QMainWindow(parent), glWidgets(new QHash)
     connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     QMenu *menuEdition = menuBar()->addMenu(tr("&Edition"));
-
-
     QMenu *menuOutils = menuBar()->addMenu("&Outils");
-
-
     QMenu *menuAide = menuBar()->addMenu("&Aide");
 
 

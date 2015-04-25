@@ -11,39 +11,20 @@ PreparationObjet::PreparationObjet()
     objetsAbstraitsBuffer["micros"] = microsBuffer;
 }
 
-void PreparationObjet::chargerObjets(QList<AbstractObjet> *objetsAbstraits)
+void PreparationObjet::chargerObjets(QList<AbstractObjet> *newObjetsAbstraits)
 {
 
-    for (int i=0; i<objetsAbstraits["objetsClassiques"].count();i++){
+    for (int i=0; i<newObjetsAbstraits["objetsClassiques"].size();i++){
 
-        objetsAbstraitsBuffer["objetsClassiques"].append() = new QGLBuffer(QGLBuffer::);
+        objetsAbstraitsBuffer["objetsClassiques"].append() = QGLBuffer();
+        objetsAbstraitsBuffer["ObjetsClassiques"].last().create();
+        objetsAbstraitsBuffer["ObjetsClassiques"].last().bind();
+        objetsAbstraitsBuffer["ObjetsClassiques"].last().allocate(3 * newObjetsAbstraits->at(i).getData().constData() * sizeof(GLdouble));
+        objetsAbstraitsBuffer["ObjetsClassiques"].last().write(0, newObjetsAbstraits->at(i).getData().constData(), newObjetsAbstraits->at(i).getData().size() * 3 * sizeof(GLdouble));
+        objetsAbstraitsBuffer["ObjetsClassiques"].last().release();
+        // Rajouter si on veut des textures
     }
-    int numSpotlightVertices = 18; // A changer
 
-     spotlightBuffer.create();
-     spotlightBuffer.bind();
-     spotlightBuffer.allocate(numSpotlightVertices * (3 + 3) * sizeof(GLfloat));
-
-     int offset = 0;
-     cubeBuffer.write(offset, spotlightVertices.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
-     offset += numSpotlightVertices * 3 * sizeof(GLfloat);
-     cubeBuffer.write(offset, spotlightColors.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
-
-     spotlightBuffer.release();
-    numCubeVertices = 36; // A changer
-
-    cubeBuffer.create();
-    cubeBuffer.bind();
-    cubeBuffer.allocate(numCubeVertices * (3 + 3 + 2) * sizeof(GLfloat)); // A changer
-
-    int offset = 0;
-    cubeBuffer.write(offset, cubeVertices.constData(), numCubeVertices * 3 * sizeof(GLfloat));
-    offset += numCubeVertices * 3 * sizeof(GLfloat);
-    cubeBuffer.write(offset, cubeNormals.constData(), numCubeVertices * 3 * sizeof(GLfloat));
-    offset += numCubeVertices * 3 * sizeof(GLfloat);
-    cubeBuffer.write(offset, cubeTextureCoordinates.constData(), numCubeVertices * 2 * sizeof(GLfloat));
-
-    cubeBuffer.release();
 
 }
 

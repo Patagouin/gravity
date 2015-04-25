@@ -6,12 +6,13 @@
 #include "Temps.h"
 
 #include "PreparationObjet.h"
+#include "GLWidget.h"
 
 class Simulation
 {
 public:
     Simulation();
-    Simulation(MesObjets objets, Monde monde);
+    Simulation(MesObjets _objets, Monde _monde);
 
 
 protected:

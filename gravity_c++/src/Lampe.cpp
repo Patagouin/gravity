@@ -4,7 +4,7 @@ Lampe::Lampe()
 {
 }
 
-Lampe::Lampe(AbstractObjet _objetClassique, QColor _couleur[NB_LIGHT_PROPERTY], double _force[NB_LIGHT_PROPERTY],
+Lampe::Lampe(ObjetClassique _objetClassique, QColor _couleur[NB_LIGHT_PROPERTY], double _force[NB_LIGHT_PROPERTY],
              QList<QVector3D> _surfaceLampe, QColor _couleurVueDirecte /*= QColor(255,255,255)*/, int _tailleHalo /*=3*/ )
                : AbstractObjet(_objetClassique), surfaceLampe(QList<QVector3D>(_surfaceLampe)),
                  couleurVueDirecte(QColor(_couleurVueDirecte)), tailleHalo(_tailleHalo)

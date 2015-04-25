@@ -44,10 +44,15 @@ public:
     bool getDeplacable() const;
     void setDeplacable(bool value);
 
+    QVector<QVector3D> getData() const;
+    void setData(const QVector<QVector3D> &value);
+
+    void makeData();
+
 protected:
     QString* nom;
 
-
+    QVector<QVector3D> data;
 
     QVector3D position;
     QVector3D orientation; // vecteur normé par rapport à l'origine

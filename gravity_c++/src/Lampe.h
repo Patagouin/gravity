@@ -3,18 +3,18 @@
 
 /* Cette classe définit les propiétés pour un objet (n'est pas un conteneur, le conteneur est mesObjets)*/
 
-#include "AbstractObjet.h"
+#include "ObjetClassique.h"
 #include <QColor>
 
 #define NB_LIGHT_PROPERTY 3
 
 enum LIGHT {AMBIANTE, DIFFUSE, SPECULAR};
 
-class Lampe : public AbstractObjet
+class Lampe : public ObjetClassique
 {
 public:
     Lampe();
-    Lampe(AbstractObjet objetClassique, QColor couleur[NB_LIGHT_PROPERTY], double force[NB_LIGHT_PROPERTY],
+    Lampe(ObjetClassique objetClassique, QColor couleur[NB_LIGHT_PROPERTY], double force[NB_LIGHT_PROPERTY],
           QList<QVector3D> surfaceLampe, QColor couleurVueDirecte = QColor(255,255,255), int tailleHalo = 3);
 
     QColor getCouleurAmbiante() const;

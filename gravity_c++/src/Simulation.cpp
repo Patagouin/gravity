@@ -2,14 +2,22 @@
 
 Simulation::Simulation()
 {
-    Monde monde = new Monde();
-    MesObjets mesObjets = new MesObjets();
-    Temps temps = new Temps();
+    Monde monde = Monde();
+    MesObjets mesObjets = MesObjets();
+    Temps temps = Temps();
 }
 
-Simulation::Simulation(MesObjets objets, Monde monde)
+Simulation::Simulation(MesObjets _objets, Monde _monde)
 {
-    mesObjets = objets.
+    mesObjets = _objets;
+    monde = _monde;
+    PreparationObjet prep = PreparationObjet();
+    prep.chargerObjets(mesObjets);
+
+
+    GLWidget gl = GLWidget();
+    gl.updateGL();
+
 }
 
 

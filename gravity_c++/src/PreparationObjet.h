@@ -10,12 +10,12 @@
 #include <QList>
 #include <QPair>
 
-typedef QPair<bool, QGLBuffer> GLBuffer; // Ajout d'un élément pour savoir si l'objet est deja bufferisé
+//typedef QPair<bool, QGLBuffer> GLBuffer; // Ajout d'un élément pour savoir si l'objet est deja bufferisé
 class PreparationObjet
 {
 public:
     PreparationObjet();
-    void preparerObjets(QList<ObjetClassique> objetClassique); // Ajoute shaders
+    void chargerObjets(QList<AbstractObjet> objetClassique); // Ajoute shaders
 
 
     QMatrix4x4 getMatriceProjection();
@@ -25,10 +25,10 @@ private:
     //QGLShaderProgram lightingShaderProgram;
     //! [2]
     QHash <QString, QList<GLBuffer > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
-    QList <GLBuffer> objetsClassiquesBuffer;
-    QList <GLBuffer> lampesBuffer;
-    QList <GLBuffer> camerasBuffer;
-    QList <GLBuffer> microsBuffer;
+    QList <QGLBuffer> objetsClassiquesBuffer;
+    QList <QGLBuffer> lampesBuffer;
+    QList <QGLBuffer> camerasBuffer;
+    QList <QGLBuffer> microsBuffer;
     //! [2]
     GLuint cubeTexture;
     //QGLShaderProgram coloringShaderProgram;

@@ -4,13 +4,16 @@ Camera::Camera()
 {
     
 }
-/*
-Camera(ObjetClassique objetClassique, QVector3D pointFocus, QList<QVector3D> surfaceCamera)
-            : ObjetClassique(objetClassique), pointFocus(pointFocus), surfaceCamera(QList<QVector3D>(surfaceCamera))
+Camera(ObjetClassique _objetClassique, QVector3D _positionCamera, QVector3D _positionFocus, double _distanceNear,
+       double _distanceFar, double _tailleL, double _tailleR, double _tailleT, double _tailleB)
+            : ObjetClassique(_objetClassique), positionCamera(_positionCamera), pointFocus(_pointFocus),
+              distanceNear(_distanceNear), distanceFar(_distanceFar), tailleL(_tailleL), tailleR(_tailleR),
+              tailleT(_tailleT), tailleB(_tailleB)
 {
 
 
-}*/
+}
+
 QVector3D Camera::getPointFocus() const
 {
     return pointFocus;
