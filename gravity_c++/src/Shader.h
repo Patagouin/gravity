@@ -10,12 +10,13 @@ class Shader
 {
 public:
     Shader();
+    Shader(const Shader &other);
     void listerPrograms();
     void chargementShaderGL();
     QString nomProgramsCourant;
     QGLShaderProgram programsCourant;
 private:
-    QStringList *listeShaders;
+    QStringList listeShaders;
 
     QGLBuffer spotlightBuffer;
 };

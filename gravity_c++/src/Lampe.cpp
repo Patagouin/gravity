@@ -5,11 +5,10 @@ Lampe::Lampe()
 }
 
 Lampe::Lampe(ObjetClassique _objetClassique, QColor _couleur[NB_LIGHT_PROPERTY], double _force[NB_LIGHT_PROPERTY],
-             QList<QVector3D> _surfaceLampe, QColor _couleurVueDirecte /*= QColor(255,255,255)*/, int _tailleHalo /*=3*/ )
-               : AbstractObjet(_objetClassique), surfaceLampe(QList<QVector3D>(_surfaceLampe)),
-                 couleurVueDirecte(QColor(_couleurVueDirecte)), tailleHalo(_tailleHalo)
+             QColor _couleurVueDirecte /*= QColor(255,255,255)*/, int _tailleHalo /*=3*/ )
+               : ObjetClassique(_objetClassique), couleurVueDirecte(QColor(_couleurVueDirecte)), tailleHalo(_tailleHalo)
 {
-    for (LIGHT i = 0; i < NB_LIGHT_PROPERTY; i++){
+    for (int i = 0; i < NB_LIGHT_PROPERTY; i++){
         couleur[i] = _couleur[i];
         force[i] = _force[i];
     }
@@ -17,57 +16,57 @@ Lampe::Lampe(ObjetClassique _objetClassique, QColor _couleur[NB_LIGHT_PROPERTY],
 }
 QColor Lampe::getCouleurAmbiante() const
 {
-    return couleurAmbiante;
+    return couleur[AMBIANTE];
 }
 
 void Lampe::setCouleurAmbiante(const QColor &value)
 {
-    couleurAmbiante = value;
+    couleur[AMBIANTE] = value;
 }
 QColor Lampe::getCouleurDiffuse() const
 {
-    return couleurDiffuse;
+    return couleur[DIFFUSE];
 }
 
 void Lampe::setCouleurDiffuse(const QColor &value)
 {
-    couleurDiffuse = value;
+    couleur[DIFFUSE] = value;
 }
 QColor Lampe::getCouleurSpecular() const
 {
-    return couleurSpecular;
+    return couleur[SPECULAR];
 }
 
 void Lampe::setCouleurSpecular(const QColor &value)
 {
-    couleurSpecular = value;
+    couleur[SPECULAR] = value;
 }
 double Lampe::getForceAmbiante() const
 {
-    return forceAmbiante;
+    return force[AMBIANTE];
 }
 
 void Lampe::setForceAmbiante(double value)
 {
-    forceAmbiante = value;
+    force[AMBIANTE] = value;
 }
 double Lampe::getForceDiffuse() const
 {
-    return forceDiffuse;
+    return force[DIFFUSE];
 }
 
 void Lampe::setForceDiffuse(double value)
 {
-    forceDiffuse = value;
+    force[DIFFUSE] = value;
 }
 double Lampe::getForceSpecular() const
 {
-    return forceSpecular;
+    return force[SPECULAR];
 }
 
 void Lampe::setForceSpecular(double value)
 {
-    forceSpecular = value;
+    force[SPECULAR] = value;
 }
 QColor Lampe::getCouleurVueDirecte() const
 {

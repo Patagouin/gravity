@@ -1,24 +1,23 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+/*  Cette classe permet de mettre à jour les objets mais ne fait aucun rendu ou envoie */
+
 #include "MesObjets.h"
 #include "Monde.h"
 #include "Temps.h"
 
-#include "PreparationObjet.h"
-#include "GLWidget.h"
 
 class Simulation
 {
 public:
-    Simulation();
-    Simulation(MesObjets _objets, Monde _monde);
+    Simulation(MesObjets &_objets, Monde _monde);
 
 
 protected:
-    MesObjets mesObjets;
+    MesObjets mesObjets; // connait que la ref
     Monde monde;
-    Temps temps;
+    Temps *temps;
 };
 
 #endif // SIMULATION_H

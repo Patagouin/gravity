@@ -7,24 +7,24 @@
 /** Cette classe gère les évènements utilisateur. **/
 class Evenements
 {
-    Q_OBJECT
+    //Q_OBJECT
 
 public:
-    Evenements(Simulation *simu);
+    Evenements();
 
 protected:
-    Simulation *simu; // Contexte
+    //Simulation *simu; // Contexte
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
+//    void mousePressEvent(QMouseEvent *event);
+//    void mouseMoveEvent(QMouseEvent *event);
+//    void wheelEvent(QWheelEvent *event);
 
-private:
-    // Retient la position du clic pour le déplacement dans la scène (rotation ou translation)
-    QPoint lastMousePosition;
+//private:
+//    // Retient la position du clic pour le déplacement dans la scène (rotation ou translation)
+//    QPoint lastMousePosition;
 
-Q_SIGNALS:
-     void deplacement(QMouseEvent *event);
+//Q_SIGNALS:
+//     //void deplacement(QMouseEvent *event);
 };
 
 #endif // EVENEMENTS_H

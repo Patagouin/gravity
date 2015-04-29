@@ -5,23 +5,29 @@
 
 PreparationObjet::PreparationObjet()
 {
-    objetsAbstraitsBuffer["objetsClassiques"] = objetsClassiquesBuffer;
-    objetsAbstraitsBuffer["cameras"] = camerasBuffer;
-    objetsAbstraitsBuffer["lampes"] = lampesBuffer;
-    objetsAbstraitsBuffer["micros"] = microsBuffer;
+    objetsAbstraitsBuffer[OBJETCLASSIQUE] = objetsClassiquesBuffer;
+    objetsAbstraitsBuffer[CAMERA] = camerasBuffer;
+    objetsAbstraitsBuffer[LAMPE] = lampesBuffer;
+    objetsAbstraitsBuffer[MICRO] = microsBuffer;
+
+
+    
+    
 }
 
-void PreparationObjet::chargerObjets(QList<AbstractObjet> *newObjetsAbstraits)
+void PreparationObjet::chargerObjets(QList<ObjetClassique> &newObjetsClassiques)
 {
 
-    for (int i=0; i<newObjetsAbstraits["objetsClassiques"].size();i++){
+    for (int i=0; i<newObjetsClassiques.size();i++){
 
-        objetsAbstraitsBuffer["objetsClassiques"].append() = QGLBuffer();
-        objetsAbstraitsBuffer["ObjetsClassiques"].last().create();
-        objetsAbstraitsBuffer["ObjetsClassiques"].last().bind();
-        objetsAbstraitsBuffer["ObjetsClassiques"].last().allocate(3 * newObjetsAbstraits->at(i).getData().constData() * sizeof(GLdouble));
-        objetsAbstraitsBuffer["ObjetsClassiques"].last().write(0, newObjetsAbstraits->at(i).getData().constData(), newObjetsAbstraits->at(i).getData().size() * 3 * sizeof(GLdouble));
-        objetsAbstraitsBuffer["ObjetsClassiques"].last().release();
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].append(QGLBuffer());
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().create();
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().bind();
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().allocate(3 * newObjetsClassiques.at(i).getForme().size() * sizeof(GLdouble));
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().write(0, newObjetsClassiques.at(i).getForme().constData(), newObjetsClassiques.at(i).getForme().size() * 3 * sizeof(GLfloat));
+        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().release();
+
+
         // Rajouter si on veut des textures
     }
 

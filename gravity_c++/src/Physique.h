@@ -11,7 +11,7 @@ public:
     Physique();
 
     void appliquerGravitationGeneral(MesObjets *objets);
-    void appliquerGraviter(AbstractObject *objet);
+    void appliquerGraviter(AbstractObjet *objet);
 
     void controleCollision(MesObjets *objets); // A faire surement a la fin des calculs physiques
     void appliquerCollision(AbstractObjet objet);

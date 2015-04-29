@@ -38,12 +38,17 @@
 #ifndef GLWidget_H
 #define GLWidget_H
 
+/* Utilise la classe GLConfig et utilise le module preparation objet */
+
 #include <QGLWidget>
-#include "MesObjets.h"
-/*
+#include "MesObjets.h" // Ne doit pas connaitre le type de données
+#include "PreparationObjet.h"
+#include "GLConfigs.h"
+
+
 #include <QGLShaderProgram>
 #include <QGLBuffer>
-*/
+
 //! [0]
 class GLWidget : public QGLWidget
 {
@@ -54,6 +59,7 @@ public:
     GLWidget(QWidget *parent = 0);
     ~GLWidget();
     QSize sizeHint() const;
+
 
 protected:
     void initializeGL();

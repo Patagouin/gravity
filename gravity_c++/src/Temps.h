@@ -7,9 +7,7 @@ class Temps : public QTimer
 {
     Q_OBJECT
 public:
-    Temps(QObject *parent = 0);
-
-    void start();
+    Temps();
 
     double getFrameRate() const;
     void setFrameRate(double value);
@@ -21,8 +19,8 @@ private:
     double vitesse; // vitesse de la simulation
     double frameRate; // Par seconde
 
-private Q_SLOTS:
-    void timeout();
+private slots:
+    //void timeout();
 };
 
 

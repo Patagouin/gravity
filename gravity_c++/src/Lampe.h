@@ -15,7 +15,7 @@ class Lampe : public ObjetClassique
 public:
     Lampe();
     Lampe(ObjetClassique objetClassique, QColor couleur[NB_LIGHT_PROPERTY], double force[NB_LIGHT_PROPERTY],
-          QList<QVector3D> surfaceLampe, QColor couleurVueDirecte = QColor(255,255,255), int tailleHalo = 3);
+          QColor couleurVueDirecte = QColor(255,255,255), int tailleHalo = 3);
 
     QColor getCouleurAmbiante() const;
     void setCouleurAmbiante(const QColor &value);

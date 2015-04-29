@@ -1,9 +1,9 @@
 #include "Temps.h"
 
-Temps::Temps(QObject *parent /* = 0*/, Simulation *simu) : QTimer(parent)
+Temps::Temps() : QTimer()
 {
 
-    connect(this, SIGNAL(timeout()), simu, SLOT(simu->context->updateGL()););
+    //connect(this, SIGNAL(timeout()), simu, SLOT(simu->context->updateGL()););
 }
 
 double Temps::getFrameRate() const
@@ -24,14 +24,10 @@ void Temps::setVitesse(double value)
     vitesse = value;
 }
 
-void start(){
-    timer->start(1000/frameRate);
-}
 /*
 void Temps::timeout()
 {
     updateGL();
 }
-
 */
 

@@ -1,13 +1,22 @@
-#ifndef MYWINDOW_H
-#define MYWINDOW_H
+#ifndef WINDOWGEN_H
+#define WINDOWGEN_H
 
-#include <QtWidgets>
+//Anciennement #include <QtWidgets> inclué toutes ces librairies
+#include <QApplication>
+#include <QMenu>
+#include <QMenuBar>
+#include <QAction>
+#include <QDockWidget>
+#include <QTabBar>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QLabel>
+
 #include <QMainWindow>
-#include "GLWidget.h"
 #include <QHash>
 #include <QString>
 
-class MyWindow : public QMainWindow
+class WindowGen : public QMainWindow
 {
     Q_OBJECT
 
@@ -15,20 +24,17 @@ class MyWindow : public QMainWindow
     //typedef enum Mode Mode;
 
 public:
-    MyWindow(QWidget *parent = 0);
+    WindowGen(QWidget *parent = 0);
 
 public slots:
-    void actualiserPosition(QMouseEvent *event);
-    void changerGLBuffer();
+    //void actualiserPosition(QMouseEvent *event);
 protected:
     // Peut etre que certains attributs devront être supprimé
 
 
     // pour gérer plusieurs simulation à la fois, du coup mettre un composant pour pouvoir ajouter glwidget
-    QHash<QString, GLWidget*>  glWidgets;
 
-    QWidget* widgetCentral;
-    QGridLayout *glLayout;
+    QWidget* widgetCentral; // Widget dans lequel sera intégré la fenetre de rendu ou autre
     QMenu *menuFichier;
     QAction *actionQuitter;
     QMenu *menuEdition;
@@ -48,4 +54,4 @@ protected:
 
 };
 
-#endif // MYWINDOW_H
+#endif // WINDOWGEN_H

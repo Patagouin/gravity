@@ -5,7 +5,7 @@
 #define MESOBJETS_H
 
 /* classe contenant tout les objets graphiques qui seront dessiné à l'écran */
-
+#include <QVector>
 #include <QVector3D>
 #include <QList>
 #include <QHash>
@@ -17,41 +17,47 @@
 #include "Camera.h"
 #include "Lampe.h"
 
+enum TYPE_OBJET { OBJETCLASSIQUE, LAMPE, CAMERA, MICRO};
+
 class MesObjets
 {
 public:
     MesObjets();
+    MesObjets(const MesObjets* other); // Constructeur de copie
 
     ~MesObjets();
 
-    // Constructeur de copie
-    MesObjets(const MesObjets* other) :  nbObjets(other->nbObjets), nbTotalObjets(other->nbTotalObjets),
-                                       mesObjets(Qhash(other->mesObjets))
-
-    {
 
 
-    }
+    void ajouterObjet(ObjetClassique &objet);
+    void ajouterObjet(Micro &objet);
+    void ajouterObjet(Camera &objet);
+    void ajouterObjet(Lampe &objet);
 
-    void ajouterObjet(ObjetClassique *objet);
-    void ajouterObjet(Micro *objet);
-    void ajouterObjet(Camera *objet);
-    void ajouterObjet(Lampe *objet);
+    QList<QVector<QVector3D> > &getCoordNewObjets();
 
-private:
-    QHash <QString, QList<AbstractObjet> > mesObjets;
+    int nbObjets;
+    int nbTotalObjets;  // Comptabilise les objets détruits
+
+    QHash <TYPE_OBJET, QList<AbstractObjet> > objets;
+
+
 
     QList<AbstractObjet> mesObjetsClassiques;
     QList<AbstractObjet> mesLampes;
     QList<AbstractObjet> mesCameras;
     QList<AbstractObjet> mesMicros;
 
-    int nbObjets;
-    int nbTotalObjets;  // Comptabilise les objets détruits
+    QList<AbstractObjet> nouveauObjets;
+
+    QList<QVector<QVector3D> > newCoordObjects; // Chaque éléments de la liste représente un objet
 
     int nbVertices;
     int nbTriangles;
 
+
+
+private:
 
 
 };

@@ -3,10 +3,13 @@
 
 #include "MesObjets.h"
 /* Cette classe fait le lien entre les vertices stocké dans ma classe MesObjets et GLWIDGETS
- qui utilise les buffer qui sont envoyés à la carte graphique*/
+ qui utilise les buffer qui sont envoyés à la carte graphique, elle initialise également les shaders,
+
+ */
 
 #include <QGLBuffer>
 #include <QGLShaderProgram>
+//#include "Shader.h"
 #include <QList>
 #include <QPair>
 
@@ -15,16 +18,17 @@ class PreparationObjet
 {
 public:
     PreparationObjet();
-    void chargerObjets(QList<AbstractObjet> objetClassique); // Ajoute shaders
+    void chargerObjets(QList<ObjetClassique> &objetClassique); // Ajoute shaders
 
 
     QMatrix4x4 getMatriceProjection();
 
 private:
     QMatrix4x4 pMatrix;
+    //Shader shader;
     //QGLShaderProgram lightingShaderProgram;
     //! [2]
-    QHash <QString, QList<GLBuffer > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
+    QHash <TYPE_OBJET, QList<QGLBuffer> > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
     QList <QGLBuffer> objetsClassiquesBuffer;
     QList <QGLBuffer> lampesBuffer;
     QList <QGLBuffer> camerasBuffer;

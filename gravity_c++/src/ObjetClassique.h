@@ -19,7 +19,7 @@ class ObjetClassique : public AbstractObjet
 
 public:
     ObjetClassique();
-    ObjetClassique(AbstractObjet *abstractObjet, double masse, double mecanique[NB_MECA_PROPERPTY]/*[3]*/);
+    ObjetClassique(AbstractObjet &abstractObjet, double masse, double mecanique[NB_MECA_PROPERPTY]/*[3]*/);
 
     ObjetClassique(const ObjetClassique* other );
 
@@ -35,10 +35,6 @@ public:
 
 
 protected:
-
-    QList<QVector3D> forme;
-    QList<QVector3D> normales;
-    QList<QVector3D> textureCoords;
 
     double masse; //En kg
     double mecanique[NB_MECA_PROPERPTY];  // Resistance = contrainte max avant rupture (

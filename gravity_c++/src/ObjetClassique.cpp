@@ -4,7 +4,7 @@ ObjetClassique::ObjetClassique()
 {
 }
 
-ObjetClassique::ObjetClassique(AbstractObjet *abstractObjet, double masse, double mecanique[NB_MECA_PROPERPTY])
+ObjetClassique::ObjetClassique(AbstractObjet &abstractObjet, double masse, double mecanique[NB_MECA_PROPERPTY])
                 :  AbstractObjet(abstractObjet), masse(masse)
 {
     this->setMecanique(mecanique);
@@ -21,7 +21,7 @@ ObjetClassique::ObjetClassique(AbstractObjet *abstractObjet, double masse, doubl
 ObjetClassique::ObjetClassique(const ObjetClassique* other)
                 : AbstractObjet(other), masse(other->masse)
 {
-    this->setmecanique(other->mecanique);
+    this->setMecanique(other->mecanique);
 }
 
 double ObjetClassique::getMasse() const{  return masse;   }

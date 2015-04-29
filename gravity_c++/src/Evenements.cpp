@@ -1,65 +1,65 @@
 #include "Evenements.h"
 
-Evenements::Evenements(Simulation *simu)
+Evenements::Evenements()
 {
-    simu = simu;
+
 }
 
-void Evenements::mousePressEvent(QMouseEvent *event)
-{
-    lastMousePosition = event->pos();
+//void Evenements::mousePressEvent(QMouseEvent *event)
+//{
+//    lastMousePosition = event->pos();
 
-    event->accept();
-}
+//    event->accept();
+//}
 
-void Evenements::mouseMoveEvent(QMouseEvent *event)
-{
-    int deltaX = event->x() - lastMousePosition.x();
-    int deltaY = event->y() - lastMousePosition.y();
+//void Evenements::mouseMoveEvent(QMouseEvent *event)
+//{
+//    int deltaX = event->x() - lastMousePosition.x();
+//    int deltaY = event->y() - lastMousePosition.y();
 
-    if (event->buttons() & Qt::LeftButton) {
-        alpha -= deltaX;
-        while (alpha < 0)
-            alpha += 360;
+//    if (event->buttons() & Qt::LeftButton) {
+//        alpha -= deltaX;
+//        while (alpha < 0)
+//            alpha += 360;
 
-        while (alpha >= 360)
-            alpha -= 360;
-
-
-        beta -= deltaY;
-        if (beta < -90)
-            beta = -90;
-
-        if (beta > 90)
-            beta = 90;
-
-    }
+//        while (alpha >= 360)
+//            alpha -= 360;
 
 
-    lastMousePosition = event->pos();
+//        beta -= deltaY;
+//        if (beta < -90)
+//            beta = -90;
 
-    event->accept();
+//        if (beta > 90)
+//            beta = 90;
 
-     emit deplacement(event); // Signal qui sera capturé par QLabel de MyWindow
-}
-
-
+//    }
 
 
-void Evenements::wheelEvent(QWheelEvent *event)
-{
-    int delta = event->delta();
+//    lastMousePosition = event->pos();
 
-    if (event->orientation() == Qt::Vertical) {
-        if (delta < 0)
-            distance *= 1.1;
-         else if (delta > 0)
-            distance *= 0.9;
+//    event->accept();
 
-    }
+//     emit deplacement(event); // Signal qui sera capturé par QLabel de MyWindow
+//}
 
-    event->accept();
-}
+
+
+
+//void Evenements::wheelEvent(QWheelEvent *event)
+//{
+//    int delta = event->delta();
+
+//    if (event->orientation() == Qt::Vertical) {
+//        if (delta < 0)
+//            distance *= 1.1;
+//         else if (delta > 0)
+//            distance *= 0.9;
+
+//    }
+
+//    event->accept();
+//}
 /*
 QMatrix4x4 mMatrix;
 QMatrix4x4 vMatrix;

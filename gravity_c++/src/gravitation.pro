@@ -13,7 +13,6 @@ SOURCES +=\
     Monde.cpp \
     ObjetClassique.cpp \
     main.cpp \
-    MyWindow.cpp \
     PreparationObjet.cpp \
     Temps.cpp \
     GLWidget.cpp \
@@ -23,7 +22,10 @@ SOURCES +=\
     VueUtilisateur.cpp \
     Evenements.cpp \
     Shader.cpp \
-    Texture.cpp
+    Texture.cpp \
+    SimulationAndContext.cpp \
+    WindowGen.cpp \
+    WindowGL.cpp
 
 
 HEADERS += \
@@ -34,7 +36,6 @@ HEADERS += \
     Micro.h \
     Monde.h \
     ObjetClassique.h \
-    MyWindow.h \
     PreparationObjet.h \
     Temps.h \
     GLWidget.h \
@@ -44,7 +45,10 @@ HEADERS += \
     VueUtilisateur.h \
     Evenements.h \
     Shader.h \
-    Texture.h
+    Texture.h \
+    SimulationAndContext.h \
+    WindowGen.h \
+    WindowGL.h
 
 OTHER_FILES += \
     programs/coloringFragmentShader.fsh \

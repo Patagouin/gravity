@@ -6,7 +6,7 @@ Texture::Texture()
 
 void Texture::chargementTextureGL()
 {
-    cubeTexture = bindTexture(QPixmap(":/cubeTexture.png"));
+    //cubeTexture = bindTexture(QPixmap(":/cubeTexture.png"));
 }
 
 void Texture::listerTextures()
@@ -14,6 +14,6 @@ void Texture::listerTextures()
     QDir dir(QString("textures/"));
 
 
-   listeTextures.append(dir.entryList(QDir::Files, QDir::Name));
+   //listeTextures.append(dir.entryList(QDir::Files, QDir::Name));
 
 }

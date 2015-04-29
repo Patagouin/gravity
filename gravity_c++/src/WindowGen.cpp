@@ -1,29 +1,27 @@
-#include "MyWindow.h"
-#include "GLWidget.h"
+#include "WindowGen.h"
 
 #include <QStringBuilder> // Pour utiliser l'opérateur % de concatenation de chaine
 
 
-MyWindow::MyWindow(QWidget *parent) : QMainWindow(parent), glWidgets(new QHash)
+WindowGen::WindowGen(QWidget *parent) : QMainWindow(parent)
 
 {
 
     this->showMaximized();
 
-    mode = VUE;
-
-    glWidgets.insert("Default", new QGLWidget(parent));
+    //mode = VUE;
 
 
-    glWidget->setMouseTracking(true); // On active le suivi de la souris pour afficher les coordonnée dans la barre de status
+
+    //glWidget->setMouseTracking(true); // On active le suivi de la souris pour afficher les coordonnée dans la barre de status
 
     // Le widget central de la QMainWindow est un GLWidget
 
     QWidget* widgetCentral (new QWidget);
-    QGridLayout *glLayout = new QGridLayout;
-    glLayout->addWidget(glWidget);
-    glLayout->setContentsMargins(QMargins(2,2,2,2));
-    widgetCentral->setLayout(glLayout);
+    //QGridLayout *glLayout = new QGridLayout;
+    //glLayout->addWidget(glWidget);
+    //glLayout->setContentsMargins(QMargins(2,2,2,2));
+    //widgetCentral->setLayout(glLayout);
 
 
     this->setCentralWidget(widgetCentral);
@@ -70,7 +68,6 @@ MyWindow::MyWindow(QWidget *parent) : QMainWindow(parent), glWidgets(new QHash)
     positionSouris->setText(QString ("Position souris : x: 0 ; y; 0"));
     barreStatus->addWidget(positionSouris);
 
-    connect(glWidget, SIGNAL(deplacement(QMouseEvent*)), this, SLOT(actualiserPosition(QMouseEvent*)));
 
     modeLabel = new QLabel(barreStatus);
     /*
@@ -90,14 +87,14 @@ MyWindow::MyWindow(QWidget *parent) : QMainWindow(parent), glWidgets(new QHash)
     barreStatus->addWidget(modeLabel);
 }
 
-void MyWindow::actualiserPosition(QMouseEvent *event){
-    QString ch1 ("Position souris : "), ch2 ("x: "), ch3(QString::number(event->x())), ch4(" ; y: "), ch5(QString::number(event->y()));
-    positionSouris->setText(ch1 % ch2 % ch3 % ch4 % ch5);
-}
+//void WindowGen::actualiserPosition(QMouseEvent *event){
+//    QString ch1 ("Position souris : "), ch2 ("x: "), ch3(QString::number(event->x())), ch4(" ; y: "), ch5(QString::number(event->y()));
+//    positionSouris->setText(ch1 % ch2 % ch3 % ch4 % ch5);
+//}
 
 
-void MyWindow::changerGLBuffer(QString nomBuffer){
-    nomBufferActuel = nomBuffer;
-    //GLContext
+//void WindowGen::changerGLBuffer(QString nomBuffer){
+//    nomBufferActuel = nomBuffer;
+//    //GLContext
 
-}
+//}

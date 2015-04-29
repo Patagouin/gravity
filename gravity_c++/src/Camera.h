@@ -19,11 +19,9 @@ public:
 
 
 
-    QVector3D getPointFocus() const;
-    void setPointFocus(const QVector3D &value);
+    QVector3D getPositionFocus() const;
+    void setPositionFocus(const QVector3D &value);
 
-    QList<QVector3D> getSurfaceCamera() const;
-    void setSurfaceCamera(const QList<QVector3D> &value);
 
 protected:
 

@@ -13,12 +13,18 @@ class GLConfigs
 public:
     GLConfigs();
     ~GLConfigs();
-    configurerGL(); //QMatrix4x4 matriceProjection dans les parametres
-    void declencherInitializeGL();
+    void configurerGL(); //QMatrix4x4 matriceProjection dans les parametres
+
+    bool getTestProfondeur() const;
+    void setTestProfondeur(bool value);
+
+    bool getTestCoteFace() const;
+    void setTestCoteFace(bool value);
+
 private:
 
-    bool testProfondeur = true;
-    bool testCoteFace = true;
+    bool testProfondeur;
+    bool testCoteFace;
 
 };
 

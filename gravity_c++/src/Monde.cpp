@@ -6,6 +6,6 @@ Monde::Monde()
 
 void Monde::fondGL()
 {
-    qglClearColor(QColor(Qt::black));
+    //qglClearColor(QColor(Qt::black));
 }
 

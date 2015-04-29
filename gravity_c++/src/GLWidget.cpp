@@ -47,6 +47,11 @@
 #include "ObjetClassique.h"
 #include "Shader.h"
 
+/* Cette classe permet de faire le rendu OpenGL, elle ne connait pas les buffers qui ont été envoyés
+ * au GPU (fait dans preparationObjet), les shaders sont initialisé dans la classe Shader et certains
+ * paramètres sont fournis dans la classe GLConfig, l'envoie des buffer (ceux du GPU) vers un shader
+ * particulier se fait dans preparationObjet */
+
 #ifdef WIN32
     #include <GL/glext.h>
     PFNGLACTIVETEXTUREPROC pGLActiveTexture = NULL;
@@ -83,15 +88,25 @@ QSize GLWidget::sizeHint() const
 //! [0]
 void GLWidget::initializeGL()
 {
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    qglClearColor(QColor(Qt::black));
+
+//    lightingShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/lightingVertexShader.vsh");
+//    lightingShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/lightingFragmentShader.fsh");
+//    lightingShaderProgram.link();
+
+
+
     //! [0]
     // S'occuper de l'initialisation de objets
-    configurerGL();
+    //configurerGL();
 
-    fondGL(); //chargement du fond
+    //fondGL(); //chargement du fond
 
-    chargementShaderGL(); // chargement des shaders
+    //chargementShaderGL(); // chargement des shaders
 
-    chargementTextureGL();
+    //chargementTextureGL();
 
     /*
     #ifdef WIN32
@@ -233,7 +248,7 @@ void GLWidget::resizeGL(int width, int height)
         height = 1;
     }
     // glConfig.cpp
-    configurerGL(getPMatrix());
+    //configurerGL(getPMatrix());
     /*
     pMatrix.setToIdentity();
     pMatrix.perspective(60.0, (float) width / (float) height, 0.001, 1000);
@@ -316,7 +331,7 @@ void GLWidget::paintGL(MesObjets mesObjets)
     for (int i; i<mesObjets.mesObjetsClassiques.size(); i++){
         // appel a une methode de preparationObjets
 
-        glDrawArrays(PRIMITIVE_FACE, 0, numCubeVertices);
+        ;//glDrawArrays(PRIMITIVE_FACE, 0, numCubeVertices);
     }
     /*
     //! [4]
@@ -348,7 +363,7 @@ void GLWidget::paintGL(MesObjets mesObjets)
     spotlightBuffer.release();
     */
     // reste ici
-    glDrawArrays(PRIMITIVE_FACE, 0, numSpotlightVertices);
+    //glDrawArrays(PRIMITIVE_FACE, 0, numSpotlightVertices);
     //! [5]
     // preparationObjet.cpp
     /*
