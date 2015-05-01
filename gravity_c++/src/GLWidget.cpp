@@ -249,10 +249,10 @@ void GLWidget::resizeGL(int width, int height)
     }
     // glConfig.cpp
     //configurerGL(getPMatrix());
-    /*
+
     pMatrix.setToIdentity();
     pMatrix.perspective(60.0, (float) width / (float) height, 0.001, 1000);
-*/
+
     glViewport(0, 0, width, height);
 }
 
@@ -328,11 +328,11 @@ void GLWidget::paintGL(MesObjets mesObjets)
     cubeBuffer.release();
     */
     // reste ici
-    for (int i; i<mesObjets.mesObjetsClassiques.size(); i++){
-        // appel a une methode de preparationObjets
+//    for (int i; i<mesObjets.mesObjetsClassiques.size(); i++){
+//        // appel a une methode de preparationObjets
 
-        ;//glDrawArrays(PRIMITIVE_FACE, 0, numCubeVertices);
-    }
+//        ;//glDrawArrays(PRIMITIVE_FACE, 0, numCubeVertices);
+//    }
     /*
     //! [4]
     // preparationObjet.cpp

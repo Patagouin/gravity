@@ -18,7 +18,7 @@ class PreparationObjet
 {
 public:
     PreparationObjet();
-    void chargerObjets(QList<ObjetClassique> &objetClassique); // Ajoute shaders
+    void chargerObjets(QList<AbstractObjet> &objetClassique); // Ajoute shaders
 
 
     QMatrix4x4 getMatriceProjection();

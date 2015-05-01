@@ -24,8 +24,8 @@ SOURCES +=\
     Shader.cpp \
     Texture.cpp \
     SimulationAndContext.cpp \
-    WindowGen.cpp \
-    WindowGL.cpp
+    WindowGen.cpp
+
 
 
 HEADERS += \
@@ -47,8 +47,8 @@ HEADERS += \
     Shader.h \
     Texture.h \
     SimulationAndContext.h \
-    WindowGen.h \
-    WindowGL.h
+    WindowGen.h
+
 
 OTHER_FILES += \
     programs/coloringFragmentShader.fsh \

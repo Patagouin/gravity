@@ -17,7 +17,7 @@
 #include "Camera.h"
 #include "Lampe.h"
 
-enum TYPE_OBJET { OBJETCLASSIQUE, LAMPE, CAMERA, MICRO};
+enum TYPE_OBJET {OBJETCLASSIQUE, LAMPE, CAMERA, MICRO};
 
 class MesObjets
 {
@@ -43,10 +43,6 @@ public:
 
 
 
-    QList<AbstractObjet> mesObjetsClassiques;
-    QList<AbstractObjet> mesLampes;
-    QList<AbstractObjet> mesCameras;
-    QList<AbstractObjet> mesMicros;
 
     QList<AbstractObjet> nouveauObjets;
 

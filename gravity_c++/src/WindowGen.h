@@ -2,7 +2,9 @@
 #define WINDOWGEN_H
 
 //Anciennement #include <QtWidgets> inclué toutes ces librairies
+//#include <QtWidgets>
 #include <QApplication>
+#include <QGridLayout>
 #include <QMenu>
 #include <QMenuBar>
 #include <QAction>
@@ -11,6 +13,8 @@
 #include <QToolBar>
 #include <QStatusBar>
 #include <QLabel>
+
+#include <QGLWidget>
 
 #include <QMainWindow>
 #include <QHash>
@@ -25,6 +29,7 @@ class WindowGen : public QMainWindow
 
 public:
     WindowGen(QWidget *parent = 0);
+    QGLWidget *glWidget;
 
 public slots:
     //void actualiserPosition(QMouseEvent *event);

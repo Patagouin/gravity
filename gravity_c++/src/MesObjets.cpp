@@ -8,24 +8,14 @@
 #include "Camera.h"
 #include "Lampe.h"
 
+#include <iostream>
+
 MesObjets::MesObjets()
 {
-    nbObjets ++;
-    nbTotalObjets ++;
+    nbObjets = 0;
+    nbTotalObjets = 0;
 
     objets = QHash <TYPE_OBJET, QList<AbstractObjet> >();
-
-    mesObjetsClassiques = QList<AbstractObjet>();
-    mesCameras = QList<AbstractObjet>();
-    mesLampes = QList<AbstractObjet>();
-    mesMicros = QList<AbstractObjet>();
-
-    // 2 moyens d'acceder aux elements 1) mesObjetsClassiques 2) mesObjets["objetsClassiques"]
-
-    objets[OBJETCLASSIQUE] = mesObjetsClassiques;
-    objets[CAMERA] = mesCameras;
-    objets[LAMPE] = mesLampes;
-    objets[MICRO] = mesMicros;
 
 
     nouveauObjets = QList<AbstractObjet>();
@@ -59,6 +49,7 @@ void MesObjets::ajouterObjet(ObjetClassique &objet){
         objets[OBJETCLASSIQUE].prepend(objet);
     else
         objets[OBJETCLASSIQUE].append(objet);
+
 
 }
 

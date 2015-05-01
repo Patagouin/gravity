@@ -11,17 +11,17 @@ WindowGen::WindowGen(QWidget *parent) : QMainWindow(parent)
 
     //mode = VUE;
 
-
+    glWidget = new QGLWidget();
 
     //glWidget->setMouseTracking(true); // On active le suivi de la souris pour afficher les coordonnée dans la barre de status
 
     // Le widget central de la QMainWindow est un GLWidget
 
     QWidget* widgetCentral (new QWidget);
-    //QGridLayout *glLayout = new QGridLayout;
-    //glLayout->addWidget(glWidget);
-    //glLayout->setContentsMargins(QMargins(2,2,2,2));
-    //widgetCentral->setLayout(glLayout);
+    QGridLayout *glLayout = new QGridLayout;
+    glLayout->addWidget(glWidget);
+    glLayout->setContentsMargins(QMargins(2,2,2,2));
+    widgetCentral->setLayout(glLayout);
 
 
     this->setCentralWidget(widgetCentral);

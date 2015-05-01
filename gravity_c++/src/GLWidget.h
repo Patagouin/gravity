@@ -74,8 +74,9 @@ protected:
     //! [1]
 private:
     //! [1]
-    /*
+
     QMatrix4x4 pMatrix;   //plusieurs fois
+    /*
     QGLShaderProgram lightingShaderProgram; // 1 fois
     //! [2]
     int numCubeVertices; //1 fois
