@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/programs">
+        <file>programs/fragment.fsh</file>
+        <file>programs/vertex.vsh</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>fragment.fsh</file>
+        <file>vertex.vsh</file>
+    </qresource>
+</RCC>

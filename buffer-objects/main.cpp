@@ -35,83 +35,16 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef GLWidget_H
-#define GLWidget_H
 
-/* Utilise la classe GLConfig et utilise le module preparation objet */
+#include <QApplication>
+#include "glwidget.h"
 
-#include <QGLWidget>
-#include "MesObjets.h" // Ne doit pas connaitre le type de données
-#include "PreparationObjet.h"
-#include "GLConfigs.h"
-
-
-#include <QGLShaderProgram>
-#include <QGLBuffer>
-#include "PreparationObjet.h"
-#include "AbstractObjet.h"
-#include <QList>
-
-//! [0]
-class GLWidget : public QGLWidget
+int main(int argc, char **argv)
 {
-    //! [0]
-    Q_OBJECT
+    QApplication a(argc, argv);
 
-public:
-    GLWidget(QWidget *parent = 0);
-    ~GLWidget();
-    QSize sizeHint() const;
+    GlWidget w;
+    w.show();
 
-    PreparationObjet preparation;
-
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    void paintGL(QList<AbstractObjet> &mesObjets);
-
-    void chargerObjets(QList<AbstractObjet> &nouveauxObjets);
-
-    QHash <TYPE_OBJET, QList<QGLBuffer> > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
-
-
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
-
-    //! [1]
-private:
-    //! [1]
-
-    QMatrix4x4 pMatrix;   //plusieurs fois
-
-    QGLShaderProgram program; // 1 fois
-
-    QGLBuffer buffer; //1 fois
-
-
-
-    //! [3]
-
-    double lightAngle;
-    double alpha;
-    double beta;
-    double distance;
-
-
-    QPoint lastMousePosition;
-
-
-private Q_SLOTS:
-    void timeout();
-
-/*
-Q_SIGNALS:
-     void deplacement(QMouseEvent *event);
-     */
-    //! [4]
-};
-//! [4]
-
-#endif // GLWidget_H
+    return a.exec();
+}

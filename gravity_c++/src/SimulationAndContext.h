@@ -7,6 +7,7 @@
 #include "PreparationObjet.h"
 //#include "Simulation.h"
 #include "GLWidget.h"
+//#include "Shader.h"
 
 enum MODE_AFFICHAGE {OPENGL};
 class SimulationAndContext
@@ -20,8 +21,8 @@ private:
 
     //Simulation simulation;
     MesObjets objets;
-    PreparationObjet preparation;
-
+    //PreparationObjet preparation;
+    //Shader shader;
     MODE_AFFICHAGE mode;
     GLWidget *glWidget; // Sera initialisé à NULL si ce n'est pas le mode d'affichage choisi
 

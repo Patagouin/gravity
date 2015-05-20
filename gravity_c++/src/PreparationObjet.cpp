@@ -1,16 +1,20 @@
 #include "PreparationObjet.h"
 #include "GLWidget.h"
 #include "MesObjets.h"
+#include <iostream>
 
-
-PreparationObjet::PreparationObjet()
+PreparationObjet::PreparationObjet() : programsCourant(new QGLShaderProgram())
 {
     objetsAbstraitsBuffer[OBJETCLASSIQUE] = objetsClassiquesBuffer;
     objetsAbstraitsBuffer[CAMERA] = camerasBuffer;
     objetsAbstraitsBuffer[LAMPE] = lampesBuffer;
     objetsAbstraitsBuffer[MICRO] = microsBuffer;
+//    bool test = true;
+//    test = programsCourant->addShaderFromSourceCode(QGLShader::Vertex, ":/vertex.fsh");
+//    programsCourant->addShaderFromSourceFile(QGLShader::Fragment, ":/fragment.fsh");
+//    qDebug() << programsCourant->log();
 
-
+//    programsCourant->link();
     
     
 }

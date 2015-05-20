@@ -27,7 +27,8 @@ private:
     QMatrix4x4 pMatrix;
     //Shader shader;
     //QGLShaderProgram lightingShaderProgram;
-    //! [2]
+    QGLShaderProgram *programsCourant;
+
     QHash <TYPE_OBJET, QList<QGLBuffer> > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
     QList <QGLBuffer> objetsClassiquesBuffer;
     QList <QGLBuffer> lampesBuffer;

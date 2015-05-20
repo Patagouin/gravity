@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/shaders" lang="vsh">
+    <qresource prefix="/programs" lang="vsh">
         <file>programs/coloringFragmentShader.fsh</file>
         <file>programs/coloringVertexShader.vsh</file>
         <file>programs/lightingFragmentShader.fsh</file>

@@ -57,5 +57,8 @@ OTHER_FILES += \
     programs/lightingVertexShader.vsh \
     textures/cubeTexture.png
 
+RESOURCES += \
+    Shaders.qrc
+
 
 

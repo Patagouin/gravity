@@ -36,108 +36,61 @@
 **
 ****************************************************************************/
 
-#include "GLWidget.h"
-/*
+#include "glwidget.h"
 #include <QTimer>
-
 #include <QMouseEvent>
 #include <QWheelEvent>
-*/
-#include "AbstractObjet.h"
-#include "ObjetClassique.h"
-#include "Shader.h"
-
-/* Cette classe permet de faire le rendu OpenGL, elle ne connait pas les buffers qui ont été envoyés
- * au GPU (fait dans preparationObjet), les shaders sont initialisé dans la classe Shader et certains
- * paramètres sont fournis dans la classe GLConfig, l'envoie des buffer (ceux du GPU) vers un shader
- * particulier se fait dans preparationObjet */
 
 #ifdef WIN32
     #include <GL/glext.h>
-    PFNGLACTIVETEXTUREPROC pGLActiveTexture = NULL;
-    #define glActiveTexture pGLActiveTexture
+    PFNGLACTIVETEXTUREPROC pGlActiveTexture = NULL;
+    #define glActiveTexture pGlActiveTexture
 #endif //WIN32
 
-#define PRIMITIVE_FACE GL_TRIANGLES // a changer en TRIANGLES_FAN
-
-GLWidget::GLWidget(QWidget *parent)
+GlWidget::GlWidget(QWidget *parent)
     : QGLWidget(QGLFormat(/* Additional format options */), parent)
 {
-    /*
     alpha = 25;
     beta = -25;
     distance = 2.5;
+
     lightAngle = 0;
-    */
-    /*
+
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    timer->start(17);
-    */
+    timer->start(20);
 }
 
-GLWidget::~GLWidget()
+GlWidget::~GlWidget()
 {
 }
 
-QSize GLWidget::sizeHint() const
+QSize GlWidget::sizeHint() const
 {
     return QSize(640, 480);
 }
 
 //! [0]
-void GLWidget::initializeGL()
+void GlWidget::initializeGL()
 {
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    qglClearColor(QColor(Qt::black));
-
-    program.addShaderFromSourceFile(QGLShader::Vertex, ":/vertex.vsh");
-    program.addShaderFromSourceFile(QGLShader::Fragment, ":/fragment.fsh");
-    program.link();
-//    program.addShaderFromSourceFile(QGLShader::Fragment, ":/lightingFragmentShader.fsh");
-//    program.link();
-
-
-
     //! [0]
-    // S'occuper de l'initialisation de objets
-    //configurerGL();
-
-    //fondGL(); //chargement du fond
-
-    //chargementShaderGL(); // chargement des shaders
-
-    //chargementTextureGL();
-
-    /*
     #ifdef WIN32
         glActiveTexture = (PFNGLACTIVETEXTUREPROC) wglGetProcAddress((LPCSTR) "glActiveTexture");
     #endif
-    */
-    // glConfig.cc
-        /*
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-    */
-    // Monde.cpp
-    /*
+
     qglClearColor(QColor(Qt::black));
-    */
-    // preparationObjet.cpp changer la méthode de diffusion de la lumiere
-    /*
-    program.addShaderFromSourceFile(QGLShader::Vertex, ":/lightingVertexShader.vsh");
-    program.addShaderFromSourceFile(QGLShader::Fragment, ":/lightingFragmentShader.fsh");
-    program.link();
-    */
-    /*
-    // MesObjets.cpp
+
+    lightingShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/lightingVertexShader.vsh");
+    lightingShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/lightingFragmentShader.fsh");
+    lightingShaderProgram.link();
+
     QVector<QVector3D> cubeVertices;
     QVector<QVector3D> cubeNormals;
     QVector<QVector2D> cubeTextureCoordinates;
 
-
-    // Par des triangles
     cubeVertices << QVector3D(-0.5, -0.5,  0.5) << QVector3D( 0.5, -0.5,  0.5) << QVector3D( 0.5,  0.5,  0.5) // Front
                  << QVector3D( 0.5,  0.5,  0.5) << QVector3D(-0.5,  0.5,  0.5) << QVector3D(-0.5, -0.5,  0.5)
                  << QVector3D( 0.5, -0.5, -0.5) << QVector3D(-0.5, -0.5, -0.5) << QVector3D(-0.5,  0.5, -0.5) // Back
@@ -175,11 +128,7 @@ void GLWidget::initializeGL()
                            << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Bottom
                            << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0);
 
-    */
-
     //! [1]
-    // PreparationObjet.cpp ->envoyer les vertices vers le buffer graphic card
-    /*
     numCubeVertices = 36;
 
     cubeBuffer.create();
@@ -191,21 +140,17 @@ void GLWidget::initializeGL()
     offset += numCubeVertices * 3 * sizeof(GLfloat);
     cubeBuffer.write(offset, cubeNormals.constData(), numCubeVertices * 3 * sizeof(GLfloat));
     offset += numCubeVertices * 3 * sizeof(GLfloat);
-    cubeBuffer.write(offset, cubeTextu  reCoordinates.constData(), numCubeVertices * 2 * sizeof(GLfloat));
+    cubeBuffer.write(offset, cubeTextureCoordinates.constData(), numCubeVertices * 2 * sizeof(GLfloat));
 
     cubeBuffer.release();
-    */
     //! [1]
-    // MesObjets.cpp
-    /*
+
     cubeTexture = bindTexture(QPixmap(":/cubeTexture.png"));
-    // preparationObjet.cpp
+
     coloringShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/coloringVertexShader.vsh");
     coloringShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/coloringFragmentShader.fsh");
     coloringShaderProgram.link();
-    */
-    // MesObjets.cpp
-    /*
+
     QVector<QVector3D> spotlightVertices;
     QVector<QVector3D> spotlightColors;
 
@@ -221,10 +166,8 @@ void GLWidget::initializeGL()
                     << QVector3D(0.2, 0.2, 0.2) << QVector3D(0.2, 0.2, 0.2) << QVector3D(0.2, 0.2, 0.2) // Right
                     << QVector3D(  1,   1,   1) << QVector3D(  1,   1,   1) << QVector3D(  1,   1,   1) // Bottom
                     << QVector3D(  1,   1,   1) << QVector3D(  1,   1,   1) << QVector3D(  1,   1,   1);
-*/
+
     //! [2]
-    // preparationObjets.cpp
-    /*
     numSpotlightVertices = 18;
 
     spotlightBuffer.create();
@@ -237,20 +180,14 @@ void GLWidget::initializeGL()
     cubeBuffer.write(offset, spotlightColors.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
 
     spotlightBuffer.release();
-    */
-
-
 }
 //! [2]
 
-void GLWidget::resizeGL(int width, int height)
+void GlWidget::resizeGL(int width, int height)
 {
-
     if (height == 0) {
         height = 1;
     }
-    // glConfig.cpp
-    //configurerGL(getPMatrix());
 
     pMatrix.setToIdentity();
     pMatrix.perspective(60.0, (float) width / (float) height, 0.001, 1000);
@@ -259,17 +196,13 @@ void GLWidget::resizeGL(int width, int height)
 }
 
 //! [3]
-void GLWidget::paintGL(QList<AbstractObjet> &mesObjets)
+void GlWidget::paintGL()
 {
-    preparation.chargerObjets(mesObjets);
     //! [3]
-    // GLConfig.cpp
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     QMatrix4x4 mMatrix;
     QMatrix4x4 vMatrix;
-
 
     QMatrix4x4 cameraTransformation;
     cameraTransformation.rotate(alpha, 0, 1, 0);
@@ -281,7 +214,6 @@ void GLWidget::paintGL(QList<AbstractObjet> &mesObjets)
     vMatrix.lookAt(cameraPosition, QVector3D(0, 0, 0), cameraUpDirection);
 
     mMatrix.setToIdentity();
-        // preparationObjet.cpp
 
     QMatrix4x4 mvMatrix;
     mvMatrix = vMatrix * mMatrix;
@@ -294,36 +226,47 @@ void GLWidget::paintGL(QList<AbstractObjet> &mesObjets)
 
     QVector3D lightPosition = lightTransformation * QVector3D(0, 1, 1);
 
-    program.bind();
+    lightingShaderProgram.bind();
 
+    lightingShaderProgram.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
+    lightingShaderProgram.setUniformValue("mvMatrix", mvMatrix);
+    lightingShaderProgram.setUniformValue("normalMatrix", normalMatrix);
+    lightingShaderProgram.setUniformValue("lightPosition", vMatrix * lightPosition);
+
+    lightingShaderProgram.setUniformValue("ambientColor", QColor(32, 32, 32));
+    lightingShaderProgram.setUniformValue("diffuseColor", QColor(64, 192, 64));
+    lightingShaderProgram.setUniformValue("specularColor", QColor(255, 255, 255));
+    lightingShaderProgram.setUniformValue("ambientReflection", (GLfloat) 1.0);
+    lightingShaderProgram.setUniformValue("diffuseReflection", (GLfloat) 1.0);
+    lightingShaderProgram.setUniformValue("specularReflection", (GLfloat) 1.0);
+    lightingShaderProgram.setUniformValue("shininess", (GLfloat) 100.0);
+    lightingShaderProgram.setUniformValue("texture", 0);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, cubeTexture);
+    glActiveTexture(0);
 
     //! [4]
     cubeBuffer.bind();
     int offset = 0;
-    program.setAttributeBuffer("vertex", GL_FLOAT, offset, 3, 0);
-    program.enableAttributeArray("vertex");
+    lightingShaderProgram.setAttributeBuffer("vertex", GL_FLOAT, offset, 3, 0);
+    lightingShaderProgram.enableAttributeArray("vertex");
     offset += numCubeVertices * 3 * sizeof(GLfloat);
-    program.setAttributeBuffer("normal", GL_FLOAT, offset, 3, 0);
-    program.enableAttributeArray("normal");
+    lightingShaderProgram.setAttributeBuffer("normal", GL_FLOAT, offset, 3, 0);
+    lightingShaderProgram.enableAttributeArray("normal");
     offset += numCubeVertices * 3 * sizeof(GLfloat);
-    program.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, 0);
-    program.enableAttributeArray("textureCoordinate");
+    lightingShaderProgram.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, 0);
+    lightingShaderProgram.enableAttributeArray("textureCoordinate");
     cubeBuffer.release();
 
-    // reste ici
-//    for (int i; i<mesObjets.mesObjetsClassiques.size(); i++){
-//        // appel a une methode de preparationObjets
-
-//        ;//glDrawArrays(PRIMITIVE_FACE, 0, numCubeVertices);
-//    }
-    /*
+    glDrawArrays(GL_TRIANGLES, 0, numCubeVertices);
     //! [4]
-    // preparationObjet.cpp
-    program.disableAttributeArray("vertex");
-    program.disableAttributeArray("normal");
-    program.disableAttributeArray("textureCoordinate");
 
-    program.release();
+    lightingShaderProgram.disableAttributeArray("vertex");
+    lightingShaderProgram.disableAttributeArray("normal");
+    lightingShaderProgram.disableAttributeArray("textureCoordinate");
+
+    lightingShaderProgram.release();
 
     mMatrix.setToIdentity();
     mMatrix.translate(lightPosition);
@@ -344,47 +287,26 @@ void GLWidget::paintGL(QList<AbstractObjet> &mesObjets)
     coloringShaderProgram.setAttributeBuffer("color", GL_FLOAT, offset, 3, 0);
     coloringShaderProgram.enableAttributeArray("color");
     spotlightBuffer.release();
-    */
-    // reste ici
-    //glDrawArrays(PRIMITIVE_FACE, 0, numSpotlightVertices);
+
+    glDrawArrays(GL_TRIANGLES, 0, numSpotlightVertices);
     //! [5]
-    // preparationObjet.cpp
-    /*
+
     coloringShaderProgram.disableAttributeArray("vertex");
     coloringShaderProgram.disableAttributeArray("color");
 
     coloringShaderProgram.release();
-    */
     //! [6]
 }
-
-void GLWidget::chargerObjets(QList<AbstractObjet> &nouveauxObjets)
-{
-    for (int i=0; i<nouveauxObjets.size();i++){
-
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].append(QGLBuffer());
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().create();
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().bind();
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().allocate(3 * nouveauxObjets.at(i).getForme().size() * sizeof(GLfloat));
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().write(0, nouveauxObjets.at(i).getForme().constData(), nouveauxObjets.at(i).getForme().size() * 3 * sizeof(GLfloat));
-        objetsAbstraitsBuffer[OBJETCLASSIQUE].last().release();
-
-
-        // Rajouter si on veut des textures
-    }
-}
 //! [6]
-// Modifié tout ce qui apres et mettre sa dans utilisateur.cpp (IHM)
 
-void GLWidget::mousePressEvent(QMouseEvent *event)
+void GlWidget::mousePressEvent(QMouseEvent *event)
 {
     lastMousePosition = event->pos();
-
 
     event->accept();
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
+void GlWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int deltaX = event->x() - lastMousePosition.x();
     int deltaY = event->y() - lastMousePosition.y();
@@ -407,18 +329,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         }
     }
 
-
     lastMousePosition = event->pos();
 
     event->accept();
-
-     emit deplacement(event); // Signal qui sera capturé par QLabel de MyWindow
 }
 
-
-
-
-void GLWidget::wheelEvent(QWheelEvent *event)
+void GlWidget::wheelEvent(QWheelEvent *event)
 {
     int delta = event->delta();
 
@@ -433,14 +349,12 @@ void GLWidget::wheelEvent(QWheelEvent *event)
     event->accept();
 }
 
-void GLWidget::timeout()
+void GlWidget::timeout()
 {
     lightAngle += 1;
     while (lightAngle >= 360) {
         lightAngle -= 360;
     }
 
-
     updateGL();
 }
-

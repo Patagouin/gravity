@@ -35,83 +35,57 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef GLWidget_H
-#define GLWidget_H
-
-/* Utilise la classe GLConfig et utilise le module preparation objet */
+#ifndef GLWIDGET_H
+#define GLWIDGET_H
 
 #include <QGLWidget>
-#include "MesObjets.h" // Ne doit pas connaitre le type de données
-#include "PreparationObjet.h"
-#include "GLConfigs.h"
-
-
 #include <QGLShaderProgram>
 #include <QGLBuffer>
-#include "PreparationObjet.h"
-#include "AbstractObjet.h"
-#include <QList>
 
 //! [0]
-class GLWidget : public QGLWidget
+class GlWidget : public QGLWidget
 {
     //! [0]
     Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = 0);
-    ~GLWidget();
+    GlWidget(QWidget *parent = 0);
+    ~GlWidget();
     QSize sizeHint() const;
-
-    PreparationObjet preparation;
 
 protected:
     void initializeGL();
     void resizeGL(int width, int height);
-    void paintGL(QList<AbstractObjet> &mesObjets);
-
-    void chargerObjets(QList<AbstractObjet> &nouveauxObjets);
-
-    QHash <TYPE_OBJET, QList<QGLBuffer> > objetsAbstraitsBuffer; // typedef QPair<bool, QGLBuffer> GLBuffer;
-
-
+    void paintGL();
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
 
-
     //! [1]
 private:
     //! [1]
-
-    QMatrix4x4 pMatrix;   //plusieurs fois
-
-    QGLShaderProgram program; // 1 fois
-
-    QGLBuffer buffer; //1 fois
-
-
-
+    QMatrix4x4 pMatrix;
+    QGLShaderProgram lightingShaderProgram;
+    //! [2]
+    int numCubeVertices;
+    QGLBuffer cubeBuffer;
+    //! [2]
+    GLuint cubeTexture;
+    QGLShaderProgram coloringShaderProgram;
     //! [3]
-
+    int numSpotlightVertices;
+    QGLBuffer spotlightBuffer;
+    //! [3]
     double lightAngle;
     double alpha;
     double beta;
     double distance;
-
-
     QPoint lastMousePosition;
-
 
 private Q_SLOTS:
     void timeout();
-
-/*
-Q_SIGNALS:
-     void deplacement(QMouseEvent *event);
-     */
     //! [4]
 };
 //! [4]
 
-#endif // GLWidget_H
+#endif // GLWIDGET_H

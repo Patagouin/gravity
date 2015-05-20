@@ -8,8 +8,10 @@ SimulationAndContext::SimulationAndContext(MesObjets &_objets, void *context, MO
     mode = _mode;
     if (mode == OPENGL){
         glWidget = (GLWidget *) context;
-        preparation = PreparationObjet();
-        preparation.chargerObjets(objets.nouveauObjets); // Pour l'instant charge tout les objets classique
+        glWidget->chargerObjets(objets.nouveauObjets);
+        //preparation = PreparationObjet();
+//        preparation.chargerObjets(objets.nouveauObjets); // Pour l'instant charge tout les objets classique
+
         glWidget->updateGL();
     }
 
