@@ -37,14 +37,84 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include "glwidget.h"
+#include "GlWidget.h"
+#include "ObjetClassique.h"
+#include "MesObjets.h"
+#include "QVector"
+#include "QVector3D"
 
 int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
 
-    GlWidget w;
-    w.show();
+
+    QVector<QVector3D> cubeVertices;
+    QVector<QVector3D> cubeNormals;
+    QVector<QVector2D> cubeTextureCoordinates;
+
+    cubeVertices << QVector3D(-0.5, -0.5,  0.5) << QVector3D( 0.5, -0.5,  0.5) << QVector3D( 0.5,  0.5,  0.5) // Front
+                 << QVector3D( 0.5,  0.5,  0.5) << QVector3D(-0.5,  0.5,  0.5) << QVector3D(-0.5, -0.5,  0.5)
+                 << QVector3D( 0.5, -0.5, -0.5) << QVector3D(-0.5, -0.5, -0.5) << QVector3D(-0.5,  0.5, -0.5) // Back
+                 << QVector3D(-0.5,  0.5, -0.5) << QVector3D( 0.5,  0.5, -0.5) << QVector3D( 0.5, -0.5, -0.5)
+                 << QVector3D(-0.5, -0.5, -0.5) << QVector3D(-0.5, -0.5,  0.5) << QVector3D(-0.5,  0.5,  0.5) // Left
+                 << QVector3D(-0.5,  0.5,  0.5) << QVector3D(-0.5,  0.5, -0.5) << QVector3D(-0.5, -0.5, -0.5)
+                 << QVector3D( 0.5, -0.5,  0.5) << QVector3D( 0.5, -0.5, -0.5) << QVector3D( 0.5,  0.5, -0.5) // Right
+                 << QVector3D( 0.5,  0.5, -0.5) << QVector3D( 0.5,  0.5,  0.5) << QVector3D( 0.5, -0.5,  0.5)
+                 << QVector3D(-0.5,  0.5,  0.5) << QVector3D( 0.5,  0.5,  0.5) << QVector3D( 0.5,  0.5, -0.5) // Top
+                 << QVector3D( 0.5,  0.5, -0.5) << QVector3D(-0.5,  0.5, -0.5) << QVector3D(-0.5,  0.5,  0.5)
+                 << QVector3D(-0.5, -0.5, -0.5) << QVector3D( 0.5, -0.5, -0.5) << QVector3D( 0.5, -0.5,  0.5) // Bottom
+                 << QVector3D( 0.5, -0.5,  0.5) << QVector3D(-0.5, -0.5,  0.5) << QVector3D(-0.5, -0.5, -0.5);
+    cubeNormals << QVector3D( 0,  0,  1) << QVector3D( 0,  0,  1) << QVector3D( 0,  0,  1) // Front
+                << QVector3D( 0,  0,  1) << QVector3D( 0,  0,  1) << QVector3D( 0,  0,  1)
+                << QVector3D( 0,  0, -1) << QVector3D( 0,  0, -1) << QVector3D( 0,  0, -1) // Back
+                << QVector3D( 0,  0, -1) << QVector3D( 0,  0, -1) << QVector3D( 0,  0, -1)
+                << QVector3D(-1,  0,  0) << QVector3D(-1,  0,  0) << QVector3D(-1,  0,  0) // Left
+                << QVector3D(-1,  0,  0) << QVector3D(-1,  0,  0) << QVector3D(-1,  0,  0)
+                << QVector3D( 1,  0,  0) << QVector3D( 1,  0,  0) << QVector3D( 1,  0,  0) // Right
+                << QVector3D( 1,  0,  0) << QVector3D( 1,  0,  0) << QVector3D( 1,  0,  0)
+                << QVector3D( 0,  1,  0) << QVector3D( 0,  1,  0) << QVector3D( 0,  1,  0) // Top
+                << QVector3D( 0,  1,  0) << QVector3D( 0,  1,  0) << QVector3D( 0,  1,  0)
+                << QVector3D( 0, -1,  0) << QVector3D( 0, -1,  0) << QVector3D( 0, -1,  0) // Bottom
+                << QVector3D( 0, -1,  0) << QVector3D( 0, -1,  0) << QVector3D( 0, -1,  0);
+    cubeTextureCoordinates << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Front
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0)
+                           << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Back
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0)
+                           << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Left
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0)
+                           << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Right
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0)
+                           << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Top
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0)
+                           << QVector2D(0, 0) << QVector2D(1, 0) << QVector2D(1, 1) // Bottom
+                           << QVector2D(1, 1) << QVector2D(0, 1) << QVector2D(0, 0);
+
+
+    ObjetClassique cube1 = ObjetClassique();
+    cube1.setForme(cubeVertices);
+    cube1.setNormales(cubeNormals);
+    cube1.setTextureCoords(cubeTextureCoordinates);
+
+    MesObjets objets = MesObjets();
+    objets.ajouterObjet(cube1);
+
+    objets.translaterObjet(0, 4, 0, 0);
+
+    for (int i = 0; i < 20; i++){
+        objets.clonerObjet(0); // Le clonnage rajoute l'objet a la fin du vecteur
+
+    }
+
+    for (int i = 0; i < 4; i++){
+        for (int j =0; j < 5; j++){
+            objets.rotationObjet(j + (i*5)+1, QVector3D(0,1,0), (20*(i*5 +j))%360);
+        }
+    }
+
+    objets.supprimerObjet(0);
+
+    GlWidget *w = new GlWidget(objets);
+    w->show();
 
     return a.exec();
 }

@@ -206,13 +206,15 @@ void GlWidget::paintGL()
     lightingShaderProgram.setUniformValue("lightPosition", vMatrix * lightPosition);
 
     lightingShaderProgram.setUniformValue("ambientColor", QColor(17, 17, 17));
-    lightingShaderProgram.setUniformValue("diffuseColor", QColor(64, 64, 64));
+    lightingShaderProgram.setUniformValue("diffuseColor", QColor(64, 255, 64));
     lightingShaderProgram.setUniformValue("specularColor", QColor(0, 255, 0));
     lightingShaderProgram.setUniformValue("ambientReflection", (GLfloat) 1.0);
     lightingShaderProgram.setUniformValue("diffuseReflection", (GLfloat) 1.0);
     lightingShaderProgram.setUniformValue("specularReflection", (GLfloat) 1.0);
     lightingShaderProgram.setUniformValue("shininess", (GLfloat) 200.0);
     lightingShaderProgram.setUniformValue("texture", 0);
+    lightingShaderProgram.setUniformValue("absoluteLightPosition", lightPosition); // Pour réduir l'effet du diffuse cela la distance
+
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, cubeTexture);

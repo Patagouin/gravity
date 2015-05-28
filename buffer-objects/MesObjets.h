@@ -24,9 +24,12 @@ public:
     ~MesObjets();
 
     void clonerObjet(int index);
-    void translaterObjet(int index, float x, float y, float z);
 
+    void translaterObjet(int index, float x, float y, float z);
+    void rotationObjet(int index, QVector3D axe, float angle);
     void ajouterObjet(ObjetClassique &objet);
+
+    void supprimerObjet(int index);
 
 
 

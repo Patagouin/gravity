@@ -4,6 +4,7 @@ uniform mat4 mvpMatrix;
 uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
 uniform vec3 lightPosition;
+uniform vec3 absoluteLightPosition;
 
 in vec4 vertex;
 in vec3 normal;
@@ -13,12 +14,14 @@ out vec3 varyingNormal;
 out vec3 varyingLightDirection;
 out vec3 varyingViewerDirection;
 out vec2 varyingTextureCoordinate;
+out float distance;
 
 void main(void)
 {
     vec4 eyeVertex = mvMatrix * vertex;
     eyeVertex /= eyeVertex.w;
     varyingNormal = normalMatrix * normal;
+    distance = pow( pow((absoluteLightPosition.x - vertex.x), 2) + pow((absoluteLightPosition.y - vertex.y), 2) + pow((absoluteLightPosition.z - vertex.z), 2), 0.5 );
     varyingLightDirection = lightPosition - eyeVertex.xyz;
     varyingViewerDirection = -eyeVertex.xyz;
     varyingTextureCoordinate = textureCoordinate;

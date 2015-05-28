@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = buffer-objects1.0.0
-DISTDIR = /home/tony/Projects/GIT_gravity/gravity/buffer-objects/.tmp/buffer-objects1.0.0
+DISTDIR = /home/tony/Documents/Projects/GIT_gravity/gravity/buffer-objects/.tmp/buffer-objects1.0.0
 LINK          = g++
 LFLAGS        = -m64
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -49,12 +49,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../buffer-objects/main.cpp \
-		../buffer-objects/glwidget.cpp qrc_resources.cpp \
-		moc_glwidget.cpp
+		../buffer-objects/MesObjets.cpp \
+		../buffer-objects/ObjetClassique.cpp \
+		../buffer-objects/GlWidget.cpp qrc_resources.cpp \
+		moc_GlWidget.cpp
 OBJECTS       = main.o \
-		glwidget.o \
+		MesObjets.o \
+		ObjetClassique.o \
+		GlWidget.o \
 		qrc_resources.o \
-		moc_glwidget.o
+		moc_GlWidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -64,6 +68,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KEmoticons.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
@@ -113,8 +118,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../buffer-objects/buffer-objects.pro ../buffer-objects/glwidget.h ../buffer-objects/main.cpp \
-		../buffer-objects/glwidget.cpp
+		../buffer-objects/buffer-objects.pro ../buffer-objects/MesObjets.h \
+		../buffer-objects/ObjetClassique.h \
+		../buffer-objects/GlWidget.h ../buffer-objects/main.cpp \
+		../buffer-objects/MesObjets.cpp \
+		../buffer-objects/ObjetClassique.cpp \
+		../buffer-objects/GlWidget.cpp
 QMAKE_TARGET  = buffer-objects
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = buffer-objects
@@ -154,6 +163,7 @@ Makefile: ../buffer-objects/buffer-objects.pro /usr/lib/x86_64-linux-gnu/qt5/mks
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KEmoticons.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
@@ -219,6 +229,7 @@ Makefile: ../buffer-objects/buffer-objects.pro /usr/lib/x86_64-linux-gnu/qt5/mks
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KEmoticons.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri:
@@ -289,8 +300,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../buffer-objects/resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../buffer-objects/glwidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../buffer-objects/main.cpp ../buffer-objects/glwidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../buffer-objects/MesObjets.h ../buffer-objects/ObjetClassique.h ../buffer-objects/GlWidget.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../buffer-objects/main.cpp ../buffer-objects/MesObjets.cpp ../buffer-objects/ObjetClassique.cpp ../buffer-objects/GlWidget.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -322,11 +333,13 @@ qrc_resources.cpp: ../buffer-objects/resources.qrc \
 		../buffer-objects/lightingVertexShader.vsh
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name resources ../buffer-objects/resources.qrc -o qrc_resources.cpp
 
-compiler_moc_header_make_all: moc_glwidget.cpp
+compiler_moc_header_make_all: moc_GlWidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_glwidget.cpp
-moc_glwidget.cpp: ../buffer-objects/glwidget.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/tony/Projects/GIT_gravity/gravity/buffer-objects -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../buffer-objects/glwidget.h -o moc_glwidget.cpp
+	-$(DEL_FILE) moc_GlWidget.cpp
+moc_GlWidget.cpp: ../buffer-objects/MesObjets.h \
+		../buffer-objects/ObjetClassique.h \
+		../buffer-objects/GlWidget.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/tony/Documents/Projects/GIT_gravity/gravity/buffer-objects -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../buffer-objects/GlWidget.h -o moc_GlWidget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -342,17 +355,28 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../buffer-objects/main.cpp ../buffer-objects/glwidget.h
+main.o: ../buffer-objects/main.cpp ../buffer-objects/GlWidget.h \
+		../buffer-objects/MesObjets.h \
+		../buffer-objects/ObjetClassique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../buffer-objects/main.cpp
 
-glwidget.o: ../buffer-objects/glwidget.cpp ../buffer-objects/glwidget.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../buffer-objects/glwidget.cpp
+MesObjets.o: ../buffer-objects/MesObjets.cpp ../buffer-objects/MesObjets.h \
+		../buffer-objects/ObjetClassique.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MesObjets.o ../buffer-objects/MesObjets.cpp
+
+ObjetClassique.o: ../buffer-objects/ObjetClassique.cpp ../buffer-objects/ObjetClassique.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjetClassique.o ../buffer-objects/ObjetClassique.cpp
+
+GlWidget.o: ../buffer-objects/GlWidget.cpp ../buffer-objects/GlWidget.h \
+		../buffer-objects/MesObjets.h \
+		../buffer-objects/ObjetClassique.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GlWidget.o ../buffer-objects/GlWidget.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
-moc_glwidget.o: moc_glwidget.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_glwidget.o moc_glwidget.cpp
+moc_GlWidget.o: moc_GlWidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_GlWidget.o moc_GlWidget.cpp
 
 ####### Install
 

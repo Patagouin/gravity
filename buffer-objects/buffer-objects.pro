@@ -5,13 +5,19 @@ TARGET = buffer-objects
 TEMPLATE = app
 
 SOURCES += main.cpp\
-           glwidget.cpp
+    MesObjets.cpp \
+    ObjetClassique.cpp \
+    GlWidget.cpp
 
-HEADERS += glwidget.h
+HEADERS += \
+    MesObjets.h \
+    ObjetClassique.h \
+    GlWidget.h
 
 OTHER_FILES += coloringFragmentShader.fsh\
                coloringVertexShader.vsh\
                lightingFragmentShader.fsh\
-               lightingVertexShader.vsh
+               lightingVertexShader.vsh \
+    Procédure.txt
 
 RESOURCES += resources.qrc

@@ -26,6 +26,7 @@ public:
     ObjetClassique(const ObjetClassique* other );
 
     void translation(float x, float y, float z);
+    void rotation(QVector3D axe, float angle);
 
     QVector<QVector3D> getForme() const;
     void setForme(QVector<QVector3D> value);

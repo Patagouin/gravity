@@ -1,5 +1,5 @@
 #include "MesObjets.h"
-
+#include "QMatrix4x4"
 
 /* SURCHARGE DES CONSTRUCTEURS*/
 
@@ -28,6 +28,11 @@ void MesObjets::ajouterObjet(ObjetClassique &objet){
 
 }
 
+void MesObjets::supprimerObjet(int index)
+{
+    objets.removeAt(index);
+}
+
 
 MesObjets::~MesObjets()
 {
@@ -45,6 +50,11 @@ void MesObjets::clonerObjet(int index)
 void MesObjets::translaterObjet(int index, float x, float y, float z)
 {
     objets[index].translation(x, y, z);
+}
+
+void MesObjets::rotationObjet(int index, QVector3D axe, float angle)
+{
+     objets[index].rotation(axe, angle);
 }
 
 

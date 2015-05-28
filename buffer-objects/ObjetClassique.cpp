@@ -1,4 +1,5 @@
 #include "ObjetClassique.h"
+#include <QMatrix4x4>
 
 ObjetClassique::ObjetClassique()
 {
@@ -20,6 +21,18 @@ void ObjetClassique::translation(float x, float y, float z)
     for (int i=0; i < forme.size(); i++){
         forme[i] += QVector3D(x,y,z);
     }
+}
+
+void ObjetClassique::rotation(QVector3D axe, float angle)
+{
+
+    QMatrix4x4 mat = QMatrix4x4();
+    mat.rotate(angle, axe);
+
+    for (int i=0; i < forme.size(); i++){
+        forme[i] = mat*forme[i];
+    }
+
 }
 
 
