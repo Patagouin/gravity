@@ -48,17 +48,16 @@
 #endif //WIN32
 
 GlWidget::GlWidget(MesObjets _objets, QWidget *parent)
-    : mesObjets(_objets), QGLWidget(QGLFormat(/* Additional format options */), parent)
+    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(freeFly,this->size()))
 {
-    alpha = 25;
-    beta = -25;
-    distance = 2.5;
 
-    lightAngle = 0;
+    //printf("GLfFly.avancement = %f\n", sv.fFly.getAvancement());
+
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    timer->start(20);
+    timer->start(200);
+
 }
 
 GlWidget::~GlWidget()
@@ -79,7 +78,7 @@ void GlWidget::initializeGL()
     #endif
 
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 
     qglClearColor(QColor(Qt::black));
 
@@ -173,18 +172,14 @@ void GlWidget::paintGL()
     //! [3]
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QMatrix4x4 mMatrix;
     QMatrix4x4 vMatrix;
 
-    QMatrix4x4 cameraTransformation;
-    cameraTransformation.rotate(alpha, 0, 1, 0);
-    cameraTransformation.rotate(beta, 1, 0, 0);
 
-    QVector3D cameraPosition = cameraTransformation * QVector3D(0, 0, distance);
-    QVector3D cameraUpDirection = cameraTransformation * QVector3D(0, 1, 0);
 
-    vMatrix.lookAt(cameraPosition, QVector3D(0, 0, 0), cameraUpDirection);
+    sv.computeViewMatrix();
+    vMatrix = sv.getViewMatrix();
 
+    QMatrix4x4 mMatrix;
     mMatrix.setToIdentity();
 
     QMatrix4x4 mvMatrix;
@@ -275,57 +270,24 @@ void GlWidget::paintGL()
     coloringShaderProgram.release();
     //! [6]
 }
-//! [6]
 
 void GlWidget::mousePressEvent(QMouseEvent *event)
 {
-    lastMousePosition = event->pos();
-
-    event->accept();
+    sv.mousePressEvent(event);
 }
 
 void GlWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    int deltaX = event->x() - lastMousePosition.x();
-    int deltaY = event->y() - lastMousePosition.y();
-
-    if (event->buttons() & Qt::LeftButton) {
-        alpha -= deltaX;
-        while (alpha < 0) {
-            alpha += 360;
-        }
-        while (alpha >= 360) {
-            alpha -= 360;
-        }
-
-        beta -= deltaY;
-        if (beta < -90) {
-            beta = -90;
-        }
-        if (beta > 90) {
-            beta = 90;
-        }
-    }
-
-    lastMousePosition = event->pos();
-
-    event->accept();
+    sv.mouseMoveEvent(event);
 }
 
 void GlWidget::wheelEvent(QWheelEvent *event)
 {
-    int delta = event->delta();
-
-    if (event->orientation() == Qt::Vertical) {
-        if (delta < 0) {
-            distance *= 1.1;
-        } else if (delta > 0) {
-            distance *= 0.9;
-        }
-    }
-
-    event->accept();
+    sv.wheelEvent(event);
 }
+//! [6]
+
+
 
 void GlWidget::timeout()
 {

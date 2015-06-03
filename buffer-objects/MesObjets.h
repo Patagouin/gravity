@@ -27,6 +27,8 @@ public:
 
     void translaterObjet(int index, float x, float y, float z);
     void rotationObjet(int index, QVector3D axe, float angle);
+    void scaleObjet(int index, float facteur);
+
     void ajouterObjet(ObjetClassique &objet);
 
     void supprimerObjet(int index);

@@ -7,12 +7,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
     MesObjets.cpp \
     ObjetClassique.cpp \
-    GlWidget.cpp
+    SphereVision.cpp \
+    GlWidget.cpp \
+    SystemeVision.cpp \
+    FreeFlyVision.cpp
 
 HEADERS += \
     MesObjets.h \
     ObjetClassique.h \
-    GlWidget.h
+    SphereVision.h \
+    GlWidget.h \
+    SystemeVision.h \
+    FreeFlyVision.h
 
 OTHER_FILES += coloringFragmentShader.fsh\
                coloringVertexShader.vsh\

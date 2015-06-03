@@ -54,7 +54,13 @@ void MesObjets::translaterObjet(int index, float x, float y, float z)
 
 void MesObjets::rotationObjet(int index, QVector3D axe, float angle)
 {
-     objets[index].rotation(axe, angle);
+    objets[index].rotation(axe, angle);
+}
+
+void MesObjets::scaleObjet(int index, float facteur)
+{
+    objets[index].scale(facteur);
+
 }
 
 

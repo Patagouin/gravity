@@ -35,14 +35,17 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef GlWidget_H
+#define GlWidget_H
 
 #include <QGLWidget>
 #include <QGLShaderProgram>
 #include <QGLBuffer>
 #include "MesObjets.h"
+#include "SystemeVision.h"
 
+
+// Le système d'affichage et de navigation est dynamique
 //! [0]
 class GlWidget : public QGLWidget
 {
@@ -59,14 +62,17 @@ protected:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
 
     //! [1]
 private:
-
     MesObjets mesObjets;
+
+    SystemeVision sv;
+
     //! [1]
     QMatrix4x4 pMatrix;
     QGLShaderProgram lightingShaderProgram;
@@ -81,10 +87,7 @@ private:
     QGLBuffer spotlightBuffer;
     //! [3]
     double lightAngle;
-    double alpha;
-    double beta;
-    double distance;
-    QPoint lastMousePosition;
+
 
 private Q_SLOTS:
     void timeout();
@@ -92,4 +95,4 @@ private Q_SLOTS:
 };
 //! [4]
 
-#endif // GLWIDGET_H
+#endif // GlWidget_H

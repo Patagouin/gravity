@@ -95,6 +95,7 @@ int main(int argc, char **argv)
     cube1.setNormales(cubeNormals);
     cube1.setTextureCoords(cubeTextureCoordinates);
 
+
     MesObjets objets = MesObjets();
     objets.ajouterObjet(cube1);
 
@@ -110,8 +111,13 @@ int main(int argc, char **argv)
             objets.rotationObjet(j + (i*5)+1, QVector3D(0,1,0), (20*(i*5 +j))%360);
         }
     }
+    objets.ajouterObjet(cube1);
+    objets.translaterObjet(objets.objets.size()-1, 0,-5,0);
 
+
+    objets.scaleObjet(objets.objets.size()-1, 3);
     objets.supprimerObjet(0);
+    objets.scaleObjet(3, 1.2);
 
     GlWidget *w = new GlWidget(objets);
     w->show();

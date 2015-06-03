@@ -27,6 +27,9 @@ public:
 
     void translation(float x, float y, float z);
     void rotation(QVector3D axe, float angle);
+    void scale(float facteur);
+
+    void computeCenter();
 
     QVector<QVector3D> getForme() const;
     void setForme(QVector<QVector3D> value);
@@ -37,7 +40,12 @@ public:
     QVector<QVector2D> getTextureCoords() const;
     void setTextureCoords(QVector<QVector2D> value);
 
+
+    QVector3D getCentre() const;
+    void setCentre(const QVector3D &value);
+
 protected:
+    QVector3D centre;
 
     QVector<QVector3D> forme;
     QVector<QVector3D> normales;

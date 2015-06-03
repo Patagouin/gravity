@@ -51,12 +51,18 @@ OBJECTS_DIR   = ./
 SOURCES       = ../buffer-objects/main.cpp \
 		../buffer-objects/MesObjets.cpp \
 		../buffer-objects/ObjetClassique.cpp \
-		../buffer-objects/GlWidget.cpp qrc_resources.cpp \
+		../buffer-objects/SphereVision.cpp \
+		../buffer-objects/GlWidget.cpp \
+		../buffer-objects/SystemeVision.cpp \
+		../buffer-objects/FreeFlyVision.cpp qrc_resources.cpp \
 		moc_GlWidget.cpp
 OBJECTS       = main.o \
 		MesObjets.o \
 		ObjetClassique.o \
+		SphereVision.o \
 		GlWidget.o \
+		SystemeVision.o \
+		FreeFlyVision.o \
 		qrc_resources.o \
 		moc_GlWidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -120,10 +126,16 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../buffer-objects/buffer-objects.pro ../buffer-objects/MesObjets.h \
 		../buffer-objects/ObjetClassique.h \
-		../buffer-objects/GlWidget.h ../buffer-objects/main.cpp \
+		../buffer-objects/SphereVision.h \
+		../buffer-objects/GlWidget.h \
+		../buffer-objects/SystemeVision.h \
+		../buffer-objects/FreeFlyVision.h ../buffer-objects/main.cpp \
 		../buffer-objects/MesObjets.cpp \
 		../buffer-objects/ObjetClassique.cpp \
-		../buffer-objects/GlWidget.cpp
+		../buffer-objects/SphereVision.cpp \
+		../buffer-objects/GlWidget.cpp \
+		../buffer-objects/SystemeVision.cpp \
+		../buffer-objects/FreeFlyVision.cpp
 QMAKE_TARGET  = buffer-objects
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = buffer-objects
@@ -300,8 +312,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../buffer-objects/resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../buffer-objects/MesObjets.h ../buffer-objects/ObjetClassique.h ../buffer-objects/GlWidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../buffer-objects/main.cpp ../buffer-objects/MesObjets.cpp ../buffer-objects/ObjetClassique.cpp ../buffer-objects/GlWidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../buffer-objects/MesObjets.h ../buffer-objects/ObjetClassique.h ../buffer-objects/SphereVision.h ../buffer-objects/GlWidget.h ../buffer-objects/SystemeVision.h ../buffer-objects/FreeFlyVision.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../buffer-objects/main.cpp ../buffer-objects/MesObjets.cpp ../buffer-objects/ObjetClassique.cpp ../buffer-objects/SphereVision.cpp ../buffer-objects/GlWidget.cpp ../buffer-objects/SystemeVision.cpp ../buffer-objects/FreeFlyVision.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -338,6 +350,8 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_GlWidget.cpp
 moc_GlWidget.cpp: ../buffer-objects/MesObjets.h \
 		../buffer-objects/ObjetClassique.h \
+		../buffer-objects/SystemeVision.h \
+		../buffer-objects/SphereVision.h \
 		../buffer-objects/GlWidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/tony/Documents/Projects/GIT_gravity/gravity/buffer-objects -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../buffer-objects/GlWidget.h -o moc_GlWidget.cpp
 
@@ -357,7 +371,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 
 main.o: ../buffer-objects/main.cpp ../buffer-objects/GlWidget.h \
 		../buffer-objects/MesObjets.h \
-		../buffer-objects/ObjetClassique.h
+		../buffer-objects/ObjetClassique.h \
+		../buffer-objects/SystemeVision.h \
+		../buffer-objects/SphereVision.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../buffer-objects/main.cpp
 
 MesObjets.o: ../buffer-objects/MesObjets.cpp ../buffer-objects/MesObjets.h \
@@ -367,10 +383,23 @@ MesObjets.o: ../buffer-objects/MesObjets.cpp ../buffer-objects/MesObjets.h \
 ObjetClassique.o: ../buffer-objects/ObjetClassique.cpp ../buffer-objects/ObjetClassique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjetClassique.o ../buffer-objects/ObjetClassique.cpp
 
+SphereVision.o: ../buffer-objects/SphereVision.cpp ../buffer-objects/SphereVision.h \
+		../buffer-objects/SystemeVision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SphereVision.o ../buffer-objects/SphereVision.cpp
+
 GlWidget.o: ../buffer-objects/GlWidget.cpp ../buffer-objects/GlWidget.h \
 		../buffer-objects/MesObjets.h \
-		../buffer-objects/ObjetClassique.h
+		../buffer-objects/ObjetClassique.h \
+		../buffer-objects/SystemeVision.h \
+		../buffer-objects/SphereVision.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GlWidget.o ../buffer-objects/GlWidget.cpp
+
+SystemeVision.o: ../buffer-objects/SystemeVision.cpp ../buffer-objects/SystemeVision.h \
+		../buffer-objects/SphereVision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SystemeVision.o ../buffer-objects/SystemeVision.cpp
+
+FreeFlyVision.o: ../buffer-objects/FreeFlyVision.cpp ../buffer-objects/FreeFlyVision.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FreeFlyVision.o ../buffer-objects/FreeFlyVision.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
