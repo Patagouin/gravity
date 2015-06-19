@@ -1,6 +1,6 @@
 #include "FreeFlyVision.h"
 #include <QtMath>
-FreeFlyVision::FreeFlyVision(QSize _tailleAffichage) : tailleAffichage(_tailleAffichage)
+FreeFlyVision::FreeFlyVision(QSize _tailleAffichage, float ips) : tailleAffichage(_tailleAffichage), imagesParSeconde(ips)
 {
     positionCamera = QVector3D(0, 0, -1);
 
@@ -30,7 +30,7 @@ void FreeFlyVision::computeViewMatrix()
     direction.normalize();
 
     positionCamera += avancement * direction;
-
+    avancement = 0.0;
 //    printf("direction = (%f, %f, %f) ;\n mat = \n (%f, %f, %f, %f)\n(%f, %f, %f, %f)\n (%f, %f, %f, %f)\n(%f, %f, %f, %f)\n\n",
 //           direction.x(), direction.y(), direction.z(), *mat.data(), *(mat.data()+1), *(mat.data()+2), *(mat.data()+3),
 //           *(mat.data()+4), *(mat.data()+5), *(mat.data()+6), *(mat.data()+7), *(mat.data()+8), *(mat.data()+9), *(mat.data()+10),
@@ -59,17 +59,17 @@ void FreeFlyVision::mouseMoveEvent(QMouseEvent *event)
     float deltaLastPosX = lastMousePosition.x() - event->x();
     float deltaLastPosY = lastMousePosition.y() - event->y() ;
     if (event->buttons() != Qt::MidButton){
-        angleHorizontal += deltaMidX * vitesseRotation;
-        angleVertical += deltaMidY * vitesseRotation;
-        printf("ok1\n");
+        angleHorizontal += (deltaMidX * vitesseRotation)/100;
+        angleVertical += (deltaMidY * vitesseRotation)/100;
+        //printf("ok1\n");
 
         if (event->buttons() & Qt::LeftButton) {
             avancement = vitesseAvancement;
-            printf("ok1\n");
+            //printf("ok1\n");
         }
         else{
             avancement = -vitesseAvancement;
-            printf("ok1b\n");
+            //printf("ok1b\n");
 
 
         }
@@ -79,7 +79,7 @@ void FreeFlyVision::mouseMoveEvent(QMouseEvent *event)
         angleVertical += deltaLastPosY * vitesseRotation;
 
     }
-    printf("avancement = %f, angleHorizontal = %f , angleVertical = %f \n", avancement, angleHorizontal, angleVertical);
+    //printf("avancement = %f, angleHorizontal = %f , angleVertical = %f \n", avancement, angleHorizontal, angleVertical);
 
     if (angleVertical <= -90)
         angleVertical = -90;

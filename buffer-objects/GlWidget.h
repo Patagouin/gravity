@@ -43,6 +43,7 @@
 #include <QGLBuffer>
 #include "MesObjets.h"
 #include "SystemeVision.h"
+#include "TempsGL.h"
 
 
 // Le système d'affichage et de navigation est dynamique
@@ -57,6 +58,7 @@ public:
     ~GlWidget();
     QSize sizeHint() const;
 
+    void updateView();
 
 protected:
     void initializeGL();
@@ -72,6 +74,7 @@ private:
     MesObjets mesObjets;
 
     SystemeVision sv;
+    TempsGL *temps;
 
     //! [1]
     QMatrix4x4 pMatrix;
@@ -89,9 +92,6 @@ private:
     double lightAngle;
 
 
-private Q_SLOTS:
-    void timeout();
-    //! [4]
 };
 //! [4]
 

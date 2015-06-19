@@ -9,7 +9,7 @@
 class FreeFlyVision
 {
 public:
-    FreeFlyVision(QSize tailleAffichage);
+    FreeFlyVision(QSize tailleAffichage, float imagesParSeconde);
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -34,6 +34,7 @@ protected:
     QMatrix4x4 viewMatrix;
 
     QSize tailleAffichage;
+    float imagesParSeconde;
 
     float vitesseAvancement;
     float vitesseRotation;

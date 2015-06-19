@@ -1,6 +1,6 @@
 #include "SystemeVision.h"
 
-SystemeVision::SystemeVision(TYPE_VISION vision, QSize tailleAffichage) : sphere(SphereVision()), fFly(FreeFlyVision(tailleAffichage))
+SystemeVision::SystemeVision(TYPE_VISION vision, QSize tailleAffichage, float imagesParSeconde) : sphere(SphereVision()), fFly(FreeFlyVision(tailleAffichage, imagesParSeconde))
 {
     currentVision = vision;
     //sphere = SphereVision();

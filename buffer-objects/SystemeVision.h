@@ -10,7 +10,7 @@ enum TYPE_VISION {spherique, freeFly};
 class SystemeVision
 {
 public:
-    SystemeVision(TYPE_VISION vision, QSize tailleAffichage);
+    SystemeVision(TYPE_VISION vision, QSize tailleAffichage, float imagesParSeconde);
 
     void changerTypeVision(TYPE_VISION vision);
     TYPE_VISION currentVision;

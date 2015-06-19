@@ -10,7 +10,8 @@ SOURCES += main.cpp\
     SphereVision.cpp \
     GlWidget.cpp \
     SystemeVision.cpp \
-    FreeFlyVision.cpp
+    FreeFlyVision.cpp \
+    TempsGL.cpp
 
 HEADERS += \
     MesObjets.h \
@@ -18,7 +19,8 @@ HEADERS += \
     SphereVision.h \
     GlWidget.h \
     SystemeVision.h \
-    FreeFlyVision.h
+    FreeFlyVision.h \
+    TempsGL.h
 
 OTHER_FILES += coloringFragmentShader.fsh\
                coloringVertexShader.vsh\

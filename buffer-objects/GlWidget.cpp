@@ -36,11 +36,12 @@
 **
 ****************************************************************************/
 
-#include "GlWidget.h"
-#include <QTimer>
 #include <QMouseEvent>
 #include <QWheelEvent>
 
+#include "GlWidget.h"
+
+#define IPS 5.0
 #ifdef WIN32
     #include <GL/glext.h>
     PFNGLACTIVETEXTUREPROC pGlActiveTexture = NULL;
@@ -48,25 +49,34 @@
 #endif //WIN32
 
 GlWidget::GlWidget(MesObjets _objets, QWidget *parent)
-    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(freeFly,this->size()))
+    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(spherique,this->size(), IPS))
 {
 
-    //printf("GLfFly.avancement = %f\n", sv.fFly.getAvancement());
 
+    temps = new TempsGL(this, IPS);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    timer->start(200);
 
 }
 
 GlWidget::~GlWidget()
 {
+    delete(temps);
 }
 
 QSize GlWidget::sizeHint() const
 {
     return QSize(640, 480);
+}
+
+void GlWidget::updateView()
+{
+    float vitesseRotationLampe = 0.2; // 1 tour par sec
+
+    lightAngle += vitesseRotationLampe * (temps->getTimeElapsedMs()/1000.) * 360.;
+    while (lightAngle >= 360) {
+        lightAngle -= 360;
+    }
+    updateGL();
 }
 
 //! [0]
@@ -289,12 +299,3 @@ void GlWidget::wheelEvent(QWheelEvent *event)
 
 
 
-void GlWidget::timeout()
-{
-    lightAngle += 1;
-    while (lightAngle >= 360) {
-        lightAngle -= 360;
-    }
-
-    updateGL();
-}
