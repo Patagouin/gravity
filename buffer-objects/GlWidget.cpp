@@ -38,10 +38,18 @@
 
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QString>
 
 #include "GlWidget.h"
 
-#define IPS 5.0
+#define IPS 60.0
+#define INFO_TOP_X 20 // En pixel
+#define INFO_TOP_Y 20 // En pixel
+#define ECART_X 0 // En pixel
+#define ECART_Y 10 // En pixel
+#define MIN_SIZE_TO_DISPLAY_INFO_X 150
+#define MIN_SIZE_TO_DISPLAY_INFO_Y 150
+
 #ifdef WIN32
     #include <GL/glext.h>
     PFNGLACTIVETEXTUREPROC pGlActiveTexture = NULL;
@@ -278,7 +286,18 @@ void GlWidget::paintGL()
     coloringShaderProgram.disableAttributeArray("color");
 
     coloringShaderProgram.release();
-    //! [6]
+
+    // Affichage du texte en premier plan
+    if (size().height() > MIN_SIZE_TO_DISPLAY_INFO_Y && size().width() > MIN_SIZE_TO_DISPLAY_INFO_X){
+        renderText(INFO_TOP_X, INFO_TOP_Y,
+                  QString("IPS = " + QString::number(temps->getIps()) ) );
+
+        renderText(INFO_TOP_X + ECART_X,
+                   INFO_TOP_Y + ECART_Y,
+                  QString("Temps = ") + temps->tempsToString("hh:mm:ss:zzz"))  ;
+    }
+
+       //! [6]
 }
 
 void GlWidget::mousePressEvent(QMouseEvent *event)
@@ -295,6 +314,16 @@ void GlWidget::wheelEvent(QWheelEvent *event)
 {
     sv.wheelEvent(event);
 }
+
+void GlWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Space)
+    if (temps->getIsPause())
+        temps->unpause();
+    else
+        temps->pause();
+}
+
 //! [6]
 
 

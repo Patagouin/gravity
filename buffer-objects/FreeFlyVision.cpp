@@ -75,7 +75,7 @@ void FreeFlyVision::mouseMoveEvent(QMouseEvent *event)
         }
     }
     else if (event->buttons() & Qt::MidButton){
-        angleHorizontal += deltaLastPosX * vitesseRotation;
+        angleHorizontal -= deltaLastPosX * vitesseRotation;
         angleVertical += deltaLastPosY * vitesseRotation;
 
     }
