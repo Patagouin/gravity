@@ -1,4 +1,4 @@
-/****************************************************************************
+    /****************************************************************************
 **
 ** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
@@ -68,6 +68,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent * event);
 
     //! [1]

@@ -66,10 +66,20 @@ void SystemeVision::wheelEvent(QWheelEvent *event)
 {
     switch (currentVision) {
     case freeFly:
-        fFly.wheelEvent(event);
         break;
     default:
         sphere.wheelEvent(event);
+        break;
+    }
+}
+
+void SystemeVision::mouseReleaseEvent(QMouseEvent *event)
+{
+    switch (currentVision) {
+    case freeFly:
+        fFly.mouseReleaseEvent(event);
+        break;
+    default:
         break;
     }
 }
