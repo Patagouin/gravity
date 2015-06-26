@@ -30,6 +30,8 @@ public:
     float getAvancement() const;
     void setAvancement(float value);
 
+    void setTailleAffichage(QSize nouvelleTaille);
+
 protected:
     void setAnglesTorightValue();
 
@@ -49,6 +51,7 @@ protected:
 
     float deltaMidX; // Pour stocker les coord de la souris lorsque celle ci est en position onClick et qu'un update doit se faire
     float deltaMidY;
+    int typeSouris; // Pour savoir quel click de souris est enfoncé (gauche, droite)
 
     QPoint lastMousePosition;
 

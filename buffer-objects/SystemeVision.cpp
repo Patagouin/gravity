@@ -84,3 +84,14 @@ void SystemeVision::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+void SystemeVision::changeTailleAffichage(QSize tailleAffichage)
+{
+    switch (currentVision) {
+    case freeFly:
+        fFly.setTailleAffichage(tailleAffichage);
+        break;
+    default:
+        break;
+    }
+}
+

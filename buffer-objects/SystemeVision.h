@@ -27,6 +27,8 @@ public:
     void wheelEvent(QWheelEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
+    void changeTailleAffichage(QSize tailleAffichage);
+
 
 
 };

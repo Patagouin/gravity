@@ -142,7 +142,7 @@ void GlWidget::resizeGL(int width, int height)
     if (height == 0) {
         height = 1;
     }
-
+    sv.changeTailleAffichage(QSize(width, height));
     pMatrix.setToIdentity();
     pMatrix.perspective(60.0, (float) width / (float) height, 0.001, 1000);
 
