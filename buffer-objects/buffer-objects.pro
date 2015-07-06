@@ -11,7 +11,10 @@ SOURCES += main.cpp\
     GlWidget.cpp \
     SystemeVision.cpp \
     FreeFlyVision.cpp \
-    TempsGL.cpp
+    TempsGL.cpp \
+    Cube.cpp \
+    Sphere.cpp \
+    utilsgl.cpp
 
 HEADERS += \
     MesObjets.h \
@@ -20,7 +23,10 @@ HEADERS += \
     GlWidget.h \
     SystemeVision.h \
     FreeFlyVision.h \
-    TempsGL.h
+    TempsGL.h \
+    Cube.h \
+    Sphere.h \
+    utilsgl.h
 
 OTHER_FILES += coloringFragmentShader.fsh\
                coloringVertexShader.vsh\

@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "GlWidget.h"
+#include "utilsgl.h"
 
 #define IPS 60.0
 #define INFO_TOP_X 20 // En pixel
@@ -19,7 +20,7 @@
 #endif //WIN32
 
 GlWidget::GlWidget(MesObjets _objets, QWidget *parent)
-    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(freeFly,this->size(), IPS))
+    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(spherique,this->size(), IPS))
 {
 
 
@@ -73,31 +74,63 @@ void GlWidget::initializeGL()
 
     //! [1]
 
-    numCubeVertices = 0;
+    nbVertices = 0;
     for (int i = 0; i < mesObjets.objets.size(); i++)
-        numCubeVertices += mesObjets.objets.at(i).getForme().size();
+        nbVertices += mesObjets.objets.at(i).getForme().size();
 
 
-    cubeBuffer.create();
-    cubeBuffer.bind();
-    cubeBuffer.allocate(numCubeVertices * (3 + 3 + 2) * sizeof(GLfloat));
+    objetsBuffer.create();
+    objetsBuffer.bind(); // associe le buffer au context actuelle
+    objetsBuffer.allocate(nbVertices * 6 * sizeof(GLfloat));
 
     int offset = 0;
     for (int i = 0; i < mesObjets.objets.size(); i++){
-        cubeBuffer.write(offset, mesObjets.objets.at(i).getForme().constData(), (numCubeVertices/mesObjets.objets.size()) * 3 * sizeof(GLfloat));
-        offset += (numCubeVertices/mesObjets.objets.size()) * 3 * sizeof(GLfloat);
-    }
-    for (int i = 0; i < mesObjets.objets.size(); i++){
-        cubeBuffer.write(offset, mesObjets.objets.at(i).getNormales().constData(), (numCubeVertices/mesObjets.objets.size()) * 3 * sizeof(GLfloat));
-        offset += (numCubeVertices/mesObjets.objets.size()) * 3 * sizeof(GLfloat);
-    }
-    for (int i = 0; i < mesObjets.objets.size(); i++){
-        cubeBuffer.write(offset, mesObjets.objets.at(i).getTextureCoords().constData(), (numCubeVertices/mesObjets.objets.size()) * 2 * sizeof(GLfloat));
-        offset += (numCubeVertices/mesObjets.objets.size()) * 2 * sizeof(GLfloat);
+        objetsBuffer.write(offset, mesObjets.objets.at(i).getForme().constData(), mesObjets.objets.at(i).getForme().size() * 3 * sizeof(GLfloat));
+        offset += mesObjets.objets.at(i).getForme().size() * 3 * sizeof(GLfloat);
     }
 
-    cubeBuffer.release();
-    //! [1]
+    // Données de rendu envoyé au gpu
+    for (int i = 0; i < mesObjets.objets.size(); i++){
+
+        if (mesObjets.objets.at(i).getNormales().size() != mesObjets.objets.at(i).getForme().size()){
+            QVector <QVector3D> dstNormales;
+
+            calculateNormales(mesObjets.objets.at(i).getForme(), dstNormales);
+            mesObjets.objets[i].setNormales(dstNormales);
+        }
+        objetsBuffer.write(offset, mesObjets.objets.at(i).getNormales().constData() ,mesObjets.objets.at(i).getForme().size() * 3 * sizeof(GLfloat));
+        offset += mesObjets.objets.at(i).getForme().size() * 3 * sizeof(GLfloat);
+    }
+    /*
+    for (int i = 0; i < mesObjets.objets.size(); i++){
+        objetsBuffer.write(offset, mesObjets.objets.at(i).getTextureCoords().constData(), (nbVertices/mesObjets.objets.size()) * 2 * sizeof(GLfloat));
+        offset += (nbVertices/mesObjets.objets.size()) * 2 * sizeof(GLfloat);
+    }*/
+
+    objetsBuffer.release();
+
+    // Données de physique envoyé au gpu
+
+//    simuBuffer.create();
+//    simuBuffer.bind();
+//    simuBuffer.allocate(nbVertices * (1 + 3) * sizeof(GLfloat)); // (masse, centre)
+//    offset = 0;
+//    for (int i = 0; i < mesObjets.objets.size(); i++){
+//        for (int j = 0; j < mesObjets.objets.at(i).getForme().size(); j++){
+//            simuBuffer.write(offset, mesObjets.objets.at(i).getMasse() , sizeof(GLfloat));
+//            offset += sizeof(GLfloat);
+//        }
+//    }
+//    for (int i = 0; i < mesObjets.objets.size(); i++){
+//        for (int j = 0; j < mesObjets.objets.at(i).getForme().size(); j++){
+//            simuBuffer.write(offset, mesObjets.objets.at(i).getCentre() , 3 * sizeof(GLfloat));
+//            offset += 3 * sizeof(GLfloat);
+//        }
+//    }
+
+//    simuBuffer.release();
+
+
 
     cubeTexture = bindTexture(QPixmap(":/cubeTexture.png"));
 
@@ -129,9 +162,9 @@ void GlWidget::initializeGL()
     spotlightBuffer.allocate(numSpotlightVertices * (3 + 3) * sizeof(GLfloat));
 
     offset = 0;
-    cubeBuffer.write(offset, spotlightVertices.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
+    objetsBuffer.write(offset, spotlightVertices.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
     offset += numSpotlightVertices * 3 * sizeof(GLfloat);
-    cubeBuffer.write(offset, spotlightColors.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
+    objetsBuffer.write(offset, spotlightColors.constData(), numSpotlightVertices * 3 * sizeof(GLfloat));
 
     spotlightBuffer.release();
 }
@@ -199,23 +232,33 @@ void GlWidget::paintGL()
     glActiveTexture(0);
 
     //! [4]
-    cubeBuffer.bind();
+    objetsBuffer.bind();
     int offset = 0;
 
 
     lightingShaderProgram.setAttributeBuffer("vertex", GL_FLOAT, offset, 3, 0);
     lightingShaderProgram.enableAttributeArray("vertex");
-    offset += numCubeVertices * 3 * sizeof(GLfloat);
+    offset += nbVertices * 3 * sizeof(GLfloat);
     lightingShaderProgram.setAttributeBuffer("normal", GL_FLOAT, offset, 3, 0);
     lightingShaderProgram.enableAttributeArray("normal");
-    offset += numCubeVertices * 3 * sizeof(GLfloat);
-    lightingShaderProgram.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, 0);
-    lightingShaderProgram.enableAttributeArray("textureCoordinate");
-    offset += numCubeVertices/2 * 2 * sizeof(GLfloat);
+    offset += nbVertices * 3 * sizeof(GLfloat);
+//    lightingShaderProgram.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, 0);
+//    lightingShaderProgram.enableAttributeArray("textureCoordinate");
+//    offset += nbVertices/2 * 2 * sizeof(GLfloat);
 
-    cubeBuffer.release();
+    objetsBuffer.release();
 
-    glDrawArrays(GL_TRIANGLES, 0, numCubeVertices);
+    // Physique
+//    simuBuffer.bind();
+//    offset = 0;
+//    lightingShaderProgram.setAttributeBuffer("masse", GL_FLOAT, offset, 1, 0);
+//    lightingShaderProgram.enableAttributeArray("masse");
+//    offset += nbVertices * 3 * sizeof(GLfloat);
+//    lightingShaderProgram.setAttributeBuffer("normal", GL_FLOAT, offset, 3, 0);
+//    lightingShaderProgram.enableAttributeArray("normal");
+//    offset += nbVertices * 3 * sizeof(GLfloat);
+
+    glDrawArrays(GL_TRIANGLES, 0, nbVertices);
     //! [4]
 
     lightingShaderProgram.disableAttributeArray("vertex");

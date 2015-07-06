@@ -1,7 +1,8 @@
 #include "ObjetClassique.h"
 #include <QMatrix4x4>
 
-ObjetClassique::ObjetClassique()
+ObjetClassique::ObjetClassique(QVector3D _centre, float _masse, typeObjet _type) :
+    centre(_centre), masse(_masse), type(_type)
 {
 }
 
@@ -11,7 +12,7 @@ ObjetClassique::ObjetClassique(const ObjetClassique* other)
                   : forme(QVector<QVector3D>(other->forme)),
                     normales(QVector<QVector3D>(other->normales)),
                     textureCoords(QVector<QVector2D>(other->textureCoords)),
-                    centre(other->centre)
+                    centre(other->centre), masse(other->masse), type(other->type)
 
 {
 
@@ -61,35 +62,6 @@ void ObjetClassique::computeCenter()
 }
 
 
-QVector<QVector3D> ObjetClassique::getForme() const
-{
-    return QVector<QVector3D>(forme);
-}
-void ObjetClassique::setForme(QVector<QVector3D> _forme)
-{
-    forme = QVector<QVector3D>(_forme);
-    computeCenter();
-}
-
-QVector<QVector3D> ObjetClassique::getNormales() const
-{
-    return  QVector<QVector3D>(normales);
-}
-void ObjetClassique::setNormales(QVector<QVector3D> _normales)
-{
-    normales = QVector<QVector3D>(_normales);
-}
-
-QVector<QVector2D> ObjetClassique::getTextureCoords() const
-{
-    return QVector<QVector2D>(textureCoords);
-}
-void ObjetClassique::setTextureCoords(QVector<QVector2D> _textureCoords)
-{
-    textureCoords = QVector<QVector2D>(_textureCoords);
-}
-
-
 QVector3D ObjetClassique::getCentre() const
 {
     return centre;
@@ -98,4 +70,44 @@ void ObjetClassique::setCentre(const QVector3D &value)
 {
     centre = value;
 }
+
+
+
+QVector<QVector3D> ObjetClassique::getForme() const
+{
+    return forme;
+}
+void ObjetClassique::setForme(const QVector<QVector3D> &_forme)
+{
+    forme = _forme;
+    computeCenter();
+}
+
+QVector<QVector3D> ObjetClassique::getNormales() const
+{
+    return  normales;
+}
+void ObjetClassique::setNormales(const QVector<QVector3D> &_normales)
+{
+    normales = _normales;
+}
+
+QVector<QVector2D> ObjetClassique::getTextureCoords() const
+{
+    return textureCoords;
+}
+void ObjetClassique::setTextureCoords(const QVector<QVector2D> &_textureCoords)
+{
+    textureCoords = _textureCoords;
+}
+float ObjetClassique::getMasse() const
+{
+    return masse;
+}
+
+void ObjetClassique::setMasse(float value)
+{
+    masse = value;
+}
+
 

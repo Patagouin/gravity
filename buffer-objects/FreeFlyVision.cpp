@@ -1,5 +1,7 @@
 #include "FreeFlyVision.h"
 #include <QtMath>
+
+#define SECTOMS 1000.0
 FreeFlyVision::FreeFlyVision(QSize _tailleAffichage, float ips) : tailleAffichage(_tailleAffichage), imagesParSeconde(ips)
 {
     positionCamera = QVector3D(0, 0, -1);
@@ -20,16 +22,16 @@ FreeFlyVision::FreeFlyVision(QSize _tailleAffichage, float ips) : tailleAffichag
 void FreeFlyVision::computeViewMatrix()
 {
     if (timer.isValid()){
-        tempsAppuie = timer.nsecsElapsed();
-        timer.start();
-        angleHorizontal -= (deltaMidX * (vitesseRotation*tempsAppuie/1000000000.0));
-        angleVertical += (deltaMidY * (vitesseRotation*tempsAppuie/1000000000.0));
-        if (typeSouris == 1)
-            avancement = (vitesseAvancement * (tempsAppuie/1000000000.0));
-        if (typeSouris == 2)
-            avancement = (vitesseAvancement * (tempsAppuie/1000000000.0));
-
+        tempsAppuie = timer.restart();
+        angleHorizontal -= (deltaMidX * (vitesseRotation*tempsAppuie/SECTOMS));
+        angleVertical += (deltaMidY * (vitesseRotation*tempsAppuie/SECTOMS));
         setAnglesTorightValue();
+
+        if (typeSouris == 1)
+            avancement = (vitesseAvancement * (tempsAppuie/SECTOMS));
+        if (typeSouris == 2)
+            avancement = (-vitesseAvancement * (tempsAppuie/SECTOMS));
+
     }
     viewMatrix.setToIdentity();
 
@@ -53,6 +55,8 @@ void FreeFlyVision::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() != Qt::MidButton){
         timer.start();
+        if (event->button() == Qt::LeftButton || event->button() == Qt::LeftButton)
+            calculatePosDelta(event->x(), event->y());
         if (event->button() == Qt::LeftButton)
             typeSouris = 1;
         else if (event->button() == Qt::RightButton)
@@ -60,43 +64,17 @@ void FreeFlyVision::mousePressEvent(QMouseEvent *event)
         else
             typeSouris = 0;
     }
+
     lastMousePosition = event->pos();
     event->accept();
 }
 
 void FreeFlyVision::mouseMoveEvent(QMouseEvent *event)
 {
-    deltaMidX =  event->x() - (tailleAffichage.width()/2); // nb de pixel par rapport au milieu
-    deltaMidY =  event->y() - (tailleAffichage.height()/2);
-
-    if (deltaMidX > tailleAffichage.width()/2)
-        deltaMidX = tailleAffichage.width()/2;
-    else if (deltaMidX < -tailleAffichage.width()/2)
-        deltaMidX = -tailleAffichage.width()/2;
-    else if (deltaMidY > tailleAffichage.height()/2)
-        deltaMidY = tailleAffichage.height()/2;
-    else if (deltaMidY < -tailleAffichage.height()/2)
-        deltaMidY = -tailleAffichage.height()/2;
-
-    deltaMidX /= tailleAffichage.width()/2;
-    deltaMidY /= tailleAffichage.height()/2;
-
-    if (event->buttons() != Qt::MidButton){
-        tempsAppuie = timer.restart();
-        angleHorizontal -= (deltaMidX * (vitesseRotation*tempsAppuie/1000.0));
-        angleVertical += (deltaMidY * (vitesseRotation*tempsAppuie/1000.0));
+    if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton)
+        calculatePosDelta(event->x(), event->y());
 
 
-
-        if (event->buttons() & Qt::LeftButton)
-            avancement = (vitesseAvancement * (tempsAppuie/1000.0));
-
-
-
-        else
-            avancement = (-vitesseAvancement * (tempsAppuie/1000.0));
-
-    }
     if (event->buttons() == Qt::MidButton){
         float deltaLastPosX = (float) (lastMousePosition.x() - event->x()) / tailleAffichage.width();
         float deltaLastPosY = (float) (lastMousePosition.y() - event->y()) / tailleAffichage.height();
@@ -108,8 +86,7 @@ void FreeFlyVision::mouseMoveEvent(QMouseEvent *event)
 
 
     lastMousePosition = event->pos();
-
-    event->accept();
+     event->accept();
 }
 
 
@@ -118,7 +95,7 @@ void FreeFlyVision::mouseReleaseEvent(QMouseEvent *event)
 {
 
 
-    if (event->button() == Qt::LeftButton){
+    if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
         tempsAppuie = 0;
 
         timer.invalidate();
@@ -167,6 +144,24 @@ void FreeFlyVision::setAnglesTorightValue()
     while (angleHorizontal < -180)
         angleHorizontal += 360;
 
+}
+
+void FreeFlyVision::calculatePosDelta(int x, int y)
+{
+    deltaMidX =  x - (tailleAffichage.width()/2); // nb de pixel par rapport au milieu
+    deltaMidY =  y - (tailleAffichage.height()/2);
+
+    if (deltaMidX > tailleAffichage.width()/2)
+        deltaMidX = tailleAffichage.width()/2;
+    else if (deltaMidX < -tailleAffichage.width()/2)
+        deltaMidX = -tailleAffichage.width()/2;
+    else if (deltaMidY > tailleAffichage.height()/2)
+        deltaMidY = tailleAffichage.height()/2;
+    else if (deltaMidY < -tailleAffichage.height()/2)
+        deltaMidY = -tailleAffichage.height()/2;
+
+    deltaMidX /= tailleAffichage.width()/2;
+    deltaMidY /= tailleAffichage.height()/2;
 }
 
 

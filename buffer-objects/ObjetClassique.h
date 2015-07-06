@@ -16,11 +16,13 @@
 // Cette classe pourra etre utilisé en tant que "patron" un modèle pour toutes les sous-classes qui
 // seront créée par la suite
 
+enum typeObjet { sphere, quelconque};
+
 class ObjetClassique
 {
 
 public:
-    ObjetClassique();
+    ObjetClassique(QVector3D centre, float masse, typeObjet type);
 
 
     ObjetClassique(const ObjetClassique* other );
@@ -31,25 +33,37 @@ public:
 
     void computeCenter();
 
-    QVector<QVector3D> getForme() const;
-    void setForme(QVector<QVector3D> value);
-
-    QVector<QVector3D> getNormales() const;
-    void setNormales(QVector<QVector3D> value);
-
-    QVector<QVector2D> getTextureCoords() const;
-    void setTextureCoords(QVector<QVector2D> value);
-
-
     QVector3D getCentre() const;
     void setCentre(const QVector3D &value);
 
+
+    QVector<QVector3D> getForme() const;
+    void setForme(const QVector<QVector3D> &value);
+
+    QVector<QVector3D> getNormales() const;
+    void setNormales(const QVector<QVector3D> &value);
+
+    QVector<QVector2D> getTextureCoords() const;
+    void setTextureCoords(const QVector<QVector2D> &value);
+
+
+    float getMasse() const;
+    void setMasse(float value);
+
 protected:
     QVector3D centre;
+    float masse; // en kg
 
     QVector<QVector3D> forme;
+
+    QVector<QVector3D> formeVertices;
+    QVector<QVector3D> formeIndices;
+
     QVector<QVector3D> normales;
     QVector<QVector2D> textureCoords;
+
+
+    typeObjet type;
 
 };
 

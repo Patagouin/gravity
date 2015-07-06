@@ -43,7 +43,7 @@ void TempsGL::calculerTemps()
 void TempsGL::pause(){
 
     isPause = true;
-    stop();
+    //stop(); // Pas de stop cara sinon pas de deplacement de la camera en situation de pause
     calculerTemps(); // tant que isPause = true plus d'appel à calculerTemps
     tic();
 
@@ -52,7 +52,7 @@ void TempsGL::pause(){
 
 void TempsGL::unpause(){
     isPause = false;
-    start();
+    //start();
 
     tempsUtilitaire.restart();
     int msDiff = timeToMs(tempsUtilitaire) - timeToMs(temps[HOUR], temps[MIN], temps[SEC], temps[MS]);

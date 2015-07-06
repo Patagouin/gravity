@@ -10,6 +10,9 @@ in vec4 vertex;
 in vec3 normal;
 in vec2 textureCoordinate;
 
+//in vec4 centre;
+//in float masse;
+
 out vec3 varyingNormal;
 out vec3 varyingLightDirection;
 out vec3 varyingViewerDirection;

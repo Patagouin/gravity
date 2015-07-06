@@ -1,6 +1,3 @@
-
-
-
 #ifndef MESOBJETS_H
 #define MESOBJETS_H
 

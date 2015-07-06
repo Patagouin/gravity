@@ -34,6 +34,7 @@ public:
 
 protected:
     void setAnglesTorightValue();
+    void calculatePosDelta(int x, int y); // Calcule le rapport entre la position de la souris et le milieu de l'ecran
 
     QMatrix4x4 viewMatrix;
 
