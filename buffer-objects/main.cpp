@@ -24,7 +24,6 @@ int main(int argc, char **argv)
     Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,3, 1000);
 
 
-    Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,5, 1000);
     objets.ajouterObjet(sphere1);
 
     Sphere sphere2 = Sphere(QVector3D(0,0,-1), 1,100, 100, 1000);
