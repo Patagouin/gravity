@@ -1,5 +1,5 @@
 #version 130
-
+uniform int nbLumiere;
 uniform vec4 ambientColor;
 uniform vec4 diffuseColor;
 uniform vec4 specularColor;

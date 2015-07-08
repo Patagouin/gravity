@@ -19,8 +19,9 @@
     #define glActiveTexture pGlActiveTexture
 #endif //WIN32
 
-GlWidget::GlWidget(MesObjets _objets, QWidget *parent)
-    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets), sv(SystemeVision(spherique,this->size(), IPS))
+GlWidget::GlWidget(MesObjets _objets,  MesLumieres _lumieres, QWidget *parent)
+    : QGLWidget(QGLFormat(/* Additional format options */), parent), mesObjets(_objets),
+      mesLumieres(_lumieres), sv(SystemeVision(spherique,this->size(), IPS))
 {
 
 
@@ -214,8 +215,9 @@ void GlWidget::paintGL()
     lightingShaderProgram.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
     lightingShaderProgram.setUniformValue("mvMatrix", mvMatrix);
     lightingShaderProgram.setUniformValue("normalMatrix", normalMatrix);
-    lightingShaderProgram.setUniformValue("lightPosition", vMatrix * lightPosition);
-
+    //for (int i = 0; i < mesLumieres.lumieres.size(); i++){
+        lightingShaderProgram.setUniformValue("lightPosition", vMatrix * lightPosition);
+    //}
     lightingShaderProgram.setUniformValue("ambientColor", QColor(17, 17, 17));
     lightingShaderProgram.setUniformValue("diffuseColor", QColor(64, 255, 64));
     lightingShaderProgram.setUniformValue("specularColor", QColor(0, 255, 0));
