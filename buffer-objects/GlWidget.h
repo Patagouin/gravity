@@ -5,6 +5,7 @@
 #include <QGLShaderProgram>
 #include <QGLBuffer>
 #include "MesObjets.h"
+#include "MesLumieres.h"
 #include "SystemeVision.h"
 #include "TempsGL.h"
 
@@ -17,7 +18,7 @@ class GlWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GlWidget(MesObjets objets, QWidget *parent = 0);
+    GlWidget(MesObjets objets, MesLumieres lumieres, QWidget *parent = 0);
     ~GlWidget();
     QSize sizeHint() const;
 
@@ -37,6 +38,7 @@ protected:
     //! [1]
 private:
     MesObjets mesObjets;
+    MesLumieres mesLumieres;
 
     SystemeVision sv;
     TempsGL *temps;

@@ -25,7 +25,7 @@ void main(void)
     eyeVertex /= eyeVertex.w;
     varyingNormal = normalMatrix * normal;
     distance = pow( pow((absoluteLightPosition.x - vertex.x), 2) + pow((absoluteLightPosition.y - vertex.y), 2) + pow((absoluteLightPosition.z - vertex.z), 2), 0.5 );
-    varyingLightDirection = lightPosition - eyeVertex.xyz;
+    varyingLightDirection = lightPosition/3 - eyeVertex.xyz;
     varyingViewerDirection = -eyeVertex.xyz;
     varyingTextureCoordinate = textureCoordinate;
     gl_Position = mvpMatrix * vertex;

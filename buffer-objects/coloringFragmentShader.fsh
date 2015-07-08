@@ -1,7 +1,4 @@
-#version 430
-
-
-shared float weight;
+#version 130
 
 in vec4 varyingColor;
 

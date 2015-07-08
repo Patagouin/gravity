@@ -18,3 +18,11 @@
     Pour cela mettre l'ancien modèle de vue dans un fichier à part.
     Creer un nouveau fichier pour ce nouveau modèle.
 
+--> OK
+
+
+A faire
+    Debug: le clonage d'un objet rend un objet non spécialisé et donc certains attributs ne sont pas copiés
+
+Optimisation: Certaines méthodes des classe mesObjets et mesLumieres pourraient etre en commun,
+    Dans une classe abstraite du nom par exemple conteneurTransformation

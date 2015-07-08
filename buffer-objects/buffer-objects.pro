@@ -14,7 +14,9 @@ SOURCES += main.cpp\
     TempsGL.cpp \
     Cube.cpp \
     Sphere.cpp \
-    utilsgl.cpp
+    utilsgl.cpp \
+    Lumiere.cpp \
+    MesLumieres.cpp
 
 HEADERS += \
     MesObjets.h \
@@ -26,7 +28,9 @@ HEADERS += \
     TempsGL.h \
     Cube.h \
     Sphere.h \
-    utilsgl.h
+    utilsgl.h \
+    Lumiere.h \
+    MesLumieres.h
 
 OTHER_FILES += coloringFragmentShader.fsh\
                coloringVertexShader.vsh\

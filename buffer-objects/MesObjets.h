@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QString>
 
+#include "Lumiere.h"
 #include "ObjetClassique.h"
 
 enum TYPE_OBJET {OBJETCLASSIQUE, LAMPE, CAMERA, MICRO};
@@ -33,7 +34,6 @@ public:
 
 
     QList<ObjetClassique> objets;
-
 
 
 
