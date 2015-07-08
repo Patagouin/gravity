@@ -21,10 +21,15 @@ int main(int argc, char **argv)
     MesObjets objets = MesObjets();
     MesLumieres lumieres = MesLumieres();
 
+<<<<<<< HEAD
     Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,3, 1000);
+=======
+
+    Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,5, 1000);
+>>>>>>> parent of d325404... Envoie des fichiers oublié du precedent commit
     objets.ajouterObjet(sphere1);
 
-    Sphere sphere2 = Sphere(QVector3D(0,0,-1), 1,10, 10, 1000);
+    Sphere sphere2 = Sphere(QVector3D(0,0,-1), 1,100, 100, 1000);
     objets.ajouterObjet(sphere2);
 
     Lumiere lum1 = Lumiere(QVector3D(2,2,2),QColor(125,255,125),QColor(125,255,125),QColor(125,255,125));
