@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     MesObjets objets = MesObjets();
     MesLumieres lumieres = MesLumieres();
 
-
+    Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,3, 1000);
 
 
     Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,5, 1000);
