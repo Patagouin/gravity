@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     MesObjets objets = MesObjets();
 
 
-    Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,2, 1000);
+    Sphere sphere1 = Sphere(QVector3D(0,0,1), 1,10, 1000);
     objets.ajouterObjet(sphere1);
 
     Sphere sphere2 = Sphere(QVector3D(0,0,-1), 1,10, 10, 1000);
