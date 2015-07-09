@@ -18,6 +18,7 @@ void MesLumieres::rotationLumiere(int index, QVector3D axe, float angle)
 void MesLumieres::clonerLumiere(int index)
 {
     Lumiere newLum = Lumiere(lumieres[index]);
+    ajouterLumiere(newLum);
 }
 
 void MesLumieres::ajouterLumiere(Lumiere &lum)

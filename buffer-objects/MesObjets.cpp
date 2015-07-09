@@ -1,11 +1,11 @@
 #include "MesObjets.h"
 #include "QMatrix4x4"
 
-/* SURCHARGE DES CONSTRUCTEURS*/
+
 
 #include "ObjetClassique.h"
 
-#include <iostream>
+
 
 MesObjets::MesObjets()
 {
